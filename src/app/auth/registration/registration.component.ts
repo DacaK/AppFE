@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, NgForm } from '@angular/forms';
+import { Employee } from 'src/app/entities/employee/employee';
+import { EmployeeService } from 'src/app/entities/employee/employee.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,19 +9,24 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  checkoutForm;
+
+
+  @ViewChild('registrationForm') registrationForm: NgForm;
+  employee: Employee = {};
   constructor(
-    private formBuilder: FormBuilder
+    private employeeService: EmployeeService
   ) { }
 
   ngOnInit() {
-    this.checkoutForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      address: '',
-      email: '',
-      password: ''
-    })
+
+  }
+
+  onRegister(data) {
+    this.employeeService.registerUser(data.value).subscribe();
+
+
+
+
   }
 
 }
