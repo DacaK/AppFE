@@ -1,6 +1,7 @@
 import { PagesModule } from './pages/pages.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { UtilModule } from './util/util.module';
 
@@ -21,6 +22,7 @@ import { HeaderComponent } from './layout/header/header.component';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     EntitiesModule,
     PagesModule,
