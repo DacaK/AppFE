@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Employee } from 'src/app/entities/employee/employee';
-import { EmployeeService } from 'src/app/entities/employee/employee.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +14,7 @@ export class RegistrationComponent implements OnInit {
   @ViewChild('registrationForm') registrationForm: NgForm;
   employee: Employee = {};
   constructor(
-    private employeeService: EmployeeService
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -22,11 +22,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onRegister(data) {
-    this.employeeService.registerUser(data.value).subscribe();
-
-
-
-
+    this.authService.registerUser(data.value).subscribe();
   }
 
 }
