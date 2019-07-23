@@ -4,7 +4,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 // import { AlertsComponent } from './alerts/alerts.component';
 
 const utilRoutes: Routes = [
-    { path: 'not-found', component: NotFoundComponent, data: { message: 'Page not found!' } },
+    { path: 'not-found', component: NotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
 ]
 @NgModule({

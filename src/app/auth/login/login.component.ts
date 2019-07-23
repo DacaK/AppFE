@@ -3,7 +3,7 @@ import { Employee } from 'src/app/entities/employee/employee';
 import { EmployeeService } from 'src/app/entities/employee/employee.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,10 +11,9 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   @ViewChild('loginForm') loginForm: NgForm;
   employee: Employee = {};
-  private currentUserSubscription: Subscription;
   constructor(
     private router: Router,
     private authService: AuthService
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin(data) {
     console.log(data.value);
-    this.currentUserSubscription = this.authService.loginUser(data.value).subscribe(
+    this.authService.loginUser(data.value).subscribe(
 
       (res) => {
         this.onSuccess(res);
@@ -37,17 +36,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSuccess(data) {
-    console.log(data);
     console.log(data.token);
-
     localStorage.setItem('token', data.token);
     this.router.navigate(['/dashboard'])
+    this.getCurrentLoggedUser();
   }
 
-
-  ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-
+  getCurrentLoggedUser() {
+    this.authService.getCurrentLoggedUser();
+    
   }
+
+  navigateToRegistration() {
+    this.router.navigate(['/registration']);
+  }
+
 
 }

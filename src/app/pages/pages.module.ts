@@ -4,14 +4,25 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { TokenInterceptorService } from '../auth/token-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SidebarComponent } from '../layout/sidebar/sidebar.component';
+import { HeaderComponent } from '../layout/header/header.component';
+import { AllEmployeesListComponent } from './employees/all-employees-list/all-employees-list.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
     imports: [
-        PagesRoutingModule
+        CommonModule,
+        PagesRoutingModule,
     ],
-    exports: [],
-    declarations: [DashboardComponent],
+    exports: [
+        SidebarComponent,
+        HeaderComponent],
+    declarations: [
+        DashboardComponent,
+        SidebarComponent,
+        HeaderComponent,
+        AllEmployeesListComponent],
     providers: [TokenInterceptorService,
         {
             provide: HTTP_INTERCEPTORS,
