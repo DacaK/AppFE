@@ -1,8 +1,64 @@
+<div class="container">
+  <div class="row justify-content-center">
+
+    <div class="col-xl-6">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Create an Account!!</h1>
+                </div>
+                <form class="user" (ngSubmit)="onRegister(registrationForm)" #registrationForm="ngForm">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control form-control-user" id="firstName" name="firstName"
+                      [(ngModel)]="employee.firstName" placeholder="First Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control form-control-user" id="lastName" name="lastName"
+                      [(ngModel)]="employee.lastName" placeholder="Last Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Email address</label>
+                    <input type="text" class="form-control form-control-user" id="email" name="email"
+                      [(ngModel)]="employee.email" placeholder="Email address">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Username</label>
+                    <input type="text" class="form-control form-control-user" id="username" name="username"
+                      [(ngModel)]="employee.username" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Password</label>
+                    <input type="password" class="form-control form-control-user" id="password" name="password"
+                      [(ngModel)]="employee.password" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- 
+
 <div class="container-fluid">
   <h2 class="text-center">Registration page</h2>
   <div class="row justify-content-md-center">
     <div class="col-md-12 col-sm-12">
-      <!-- Set allerts -->
+
     </div>
   </div>
   <div class="row justify-content-md-center">
@@ -37,4 +93,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
