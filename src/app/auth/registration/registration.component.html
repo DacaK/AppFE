@@ -13,27 +13,22 @@
                 </div>
                 <form class="user" (ngSubmit)="onRegister(registrationForm)" #registrationForm="ngForm">
                   <div class="form-group">
-                    <label for="firstName">First Name</label>
                     <input type="text" class="form-control form-control-user" id="firstName" name="firstName"
                       [(ngModel)]="employee.firstName" placeholder="First Name">
                   </div>
                   <div class="form-group">
-                    <label for="lastName">Last Name</label>
                     <input type="text" class="form-control form-control-user" id="lastName" name="lastName"
                       [(ngModel)]="employee.lastName" placeholder="Last Name">
                   </div>
                   <div class="form-group">
-                    <label for="lastName">Email address</label>
                     <input type="text" class="form-control form-control-user" id="email" name="email"
                       [(ngModel)]="employee.email" placeholder="Email address">
                   </div>
                   <div class="form-group">
-                    <label for="lastName">Username</label>
                     <input type="text" class="form-control form-control-user" id="username" name="username"
                       [(ngModel)]="employee.username" placeholder="Username">
                   </div>
                   <div class="form-group">
-                    <label for="lastName">Password</label>
                     <input type="password" class="form-control form-control-user" id="password" name="password"
                       [(ngModel)]="employee.password" placeholder="Password">
                   </div>
@@ -49,48 +44,3 @@
 
   </div>
 </div>
-
-
-
-<!-- 
-
-<div class="container-fluid">
-  <h2 class="text-center">Registration page</h2>
-  <div class="row justify-content-md-center">
-    <div class="col-md-12 col-sm-12">
-
-    </div>
-  </div>
-  <div class="row justify-content-md-center">
-    <div class="col-md-3 col-sm-12">
-      <form (ngSubmit)="onRegister(registrationForm)" #registrationForm="ngForm">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="employee.firstName"
-            placeholder="First Name">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="employee.lastName"
-            placeholder="Last Name">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Email address</label>
-          <input type="text" class="form-control" id="email" name="email" [(ngModel)]="employee.email"
-            placeholder="Email address">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Username</label>
-          <input type="text" class="form-control" id="username" name="username" [(ngModel)]="employee.username"
-            placeholder="Username">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Password</label>
-          <input type="password" class="form-control" id="password" name="password" [(ngModel)]="employee.password"
-            placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div>
-</div> -->
