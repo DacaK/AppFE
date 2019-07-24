@@ -40,19 +40,12 @@ export class AuthService {
 
     getCurrentLoggedUser() {
         return this.http.get(AppSettings.APP_ENDPOINT + this.currentLoggedUserUrl);
-
     }
 
-    isUser() {
-        let isUser: boolean;
-        isUser = this.currentUser && this.role === 'USER';
-        return isUser;
-    }
-
-    isAdmin() {
+    isAdmin(user) {
         let isAdmin: boolean;
-        isAdmin = this.currentUser && this.role === 'ADMIN';
-        this.sharedService.isAdminMessage(isAdmin)
+        isAdmin = user && user.authority.role === 'ADMIN';
+        this.sharedService.isAdminMessage(isAdmin);
         return isAdmin;
     }
 

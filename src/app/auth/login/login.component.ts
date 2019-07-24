@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
 
   getCurrentLoggedUser() {
     this.authService.getCurrentLoggedUser().subscribe(res => {
+      this.authService.isAdmin(res);
       this.sharedService.sendLoggedUserMessage(res);
     }
     );;
