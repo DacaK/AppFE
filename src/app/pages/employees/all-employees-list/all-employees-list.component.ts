@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Employee } from './../../../entities/employee/employee';
 import { EmployeeService } from 'src/app/entities/employee/employee.service';
+import { Authority } from 'src/app/entities/employee/authority';
 
 @Component({
   selector: 'app-all-employees-list',
@@ -23,11 +24,48 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
   }
 
   onSuccess(data) {
+    console.log(data);
+
     this.employeeList = data;
+
   }
+
 
   ngOnDestroy() {
     this.employeesSubscription.unsubscribe();
   }
+
+
+
+  settings = {
+    columns: {
+      firstName: {
+        title: 'First Name',
+      },
+      lastName: {
+        title: 'Last Name'
+      },
+      username: {
+        title: 'Username'
+      },
+      email: {
+        title: 'Email'
+      },
+      authority: {
+        title: 'role',
+        editable: false,
+        valuePrepareFunction: (authority) => {
+          return authority.role;
+        }
+      }
+    },
+
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    edit: false,
+  };
 
 }

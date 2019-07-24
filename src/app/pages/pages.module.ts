@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { TokenInterceptorService } from '../auth/token-interceptor.service';
@@ -14,6 +16,7 @@ import { CommonModule } from '@angular/common';
     imports: [
         CommonModule,
         PagesRoutingModule,
+        Ng2SmartTableModule
     ],
     exports: [
         SidebarComponent,
