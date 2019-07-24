@@ -1,6 +1,7 @@
-import { Employee } from './../../../entities/employee/employee';
-import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { Employee } from './../../../entities/employee/employee';
 import { EmployeeService } from 'src/app/entities/employee/employee.service';
 
 @Component({
@@ -12,7 +13,6 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
 
   private employeesSubscription: Subscription;
   employeeList: Employee[] = [];
-  //  employeeList: any;
 
   constructor(private employeeService: EmployeeService) { }
 
@@ -24,7 +24,6 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
 
   onSuccess(data) {
     this.employeeList = data;
-    console.log(data);
   }
 
   ngOnDestroy() {
