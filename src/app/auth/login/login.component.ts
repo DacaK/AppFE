@@ -1,3 +1,4 @@
+import { SharedService } from './../../util/shared.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Employee } from 'src/app/entities/employee/employee';
 import { EmployeeService } from 'src/app/entities/employee/employee.service';
@@ -16,14 +17,14 @@ export class LoginComponent implements OnInit {
   employee: Employee = {};
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
   }
 
   onLogin(data) {
-    console.log(data.value);
     this.authService.loginUser(data.value).subscribe(
 
       (res) => {
@@ -36,15 +37,18 @@ export class LoginComponent implements OnInit {
   }
 
   onSuccess(data) {
-    console.log(data.token);
     localStorage.setItem('token', data.token);
+
     this.router.navigate(['/dashboard'])
     this.getCurrentLoggedUser();
   }
 
   getCurrentLoggedUser() {
-    this.authService.getCurrentLoggedUser();
-    
+    this.authService.getCurrentLoggedUser().subscribe(res => {
+      this.sharedService.sendLoggedUserMessage(res);
+    }
+    );;
+
   }
 
   navigateToRegistration() {

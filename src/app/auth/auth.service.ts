@@ -1,10 +1,10 @@
-import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AppSettings } from '../util/app-settings';
 import { Employee } from '../entities/employee/employee';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+import { SharedService } from './../util/shared.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,8 @@ export class AuthService {
     private currentUser: any;
     public role: string;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+        private sharedService: SharedService) { }
 
     registerUser(user: Employee) {
         return this.http.post(AppSettings.APP_ENDPOINT + this.registrationUrl, user);
@@ -27,7 +28,10 @@ export class AuthService {
     }
 
     loggedIn() {
-        return !!localStorage.getItem('token');
+        let isLoggedIn: boolean;
+        isLoggedIn = !!localStorage.getItem('token');
+        this.sharedService.isLoggedInMessage(isLoggedIn);
+        return isLoggedIn;
     }
 
     getToken() {
@@ -36,24 +40,24 @@ export class AuthService {
 
     getCurrentLoggedUser() {
         return this.http.get(AppSettings.APP_ENDPOINT + this.currentLoggedUserUrl);
-        // .subscribe(res => {
-        //     this.currentUser = res;
-        //     console.log(this.currentUser);
-        //     this.role = this.currentUser.authority.role;
-        //     console.log(this.role);
-        // }
-        // );
+
     }
 
     isUser() {
-        return this.currentUser && this.role === 'USER';
+        let isUser: boolean;
+        isUser = this.currentUser && this.role === 'USER';
+        return isUser;
     }
 
     isAdmin() {
-        return this.currentUser && this.role === 'ADMIN';
+        let isAdmin: boolean;
+        isAdmin = this.currentUser && this.role === 'ADMIN';
+        this.sharedService.isAdminMessage(isAdmin)
+        return isAdmin;
     }
 
     logout() {
+        this.sharedService.isLoggedInMessage(false);
         localStorage.removeItem('token');
     }
 

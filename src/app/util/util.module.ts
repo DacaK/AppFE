@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SharedService } from './shared.service';
 // import { AlertsComponent } from './alerts/alerts.component';
 
 const utilRoutes: Routes = [
@@ -13,6 +14,6 @@ const utilRoutes: Routes = [
     declarations: [NotFoundComponent,
         //  AlertsComponent
     ],
-    providers: [],
+    providers: [SharedService],
 })
 export class UtilModule { }
