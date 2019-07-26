@@ -1,5 +1,8 @@
+import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { Role } from 'src/app/entities/employee/role';
 
 import { SharedService } from './../../util/shared.service';
 
@@ -10,20 +13,27 @@ import { SharedService } from './../../util/shared.service';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
+  private currentUserSubscription: Subscription;
+
   private isLoggedInSubscription: Subscription;
   private isAdminSubscription: Subscription;
   isLoggedIn: boolean = false;
-  isAdmin: boolean;
+  // isAdmin: any;
+  currentUser: any;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.isLoggedInSubscription = this.sharedService.isLoggedIn$.subscribe(res => {
-      this.isLoggedIn = res;
-    });
-    this.isAdminSubscription = this.sharedService.isAdmin$.subscribe(res => {
-      this.isAdmin = res;
-    })
+    this.authService.currentUser$.subscribe(
+      res => {
+        this.currentUser = res;
+      }
+    )
+
+
+  }
+  get isAdmin() {
+    return this.currentUser && this.currentUser.pmfkm === Role.ADMIN;
   }
 
 

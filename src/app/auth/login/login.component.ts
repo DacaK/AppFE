@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -38,18 +39,16 @@ export class LoginComponent implements OnInit {
 
   onSuccess(data) {
     localStorage.setItem('token', data.token);
-
     this.router.navigate(['/dashboard'])
-    this.getCurrentLoggedUser();
+    this.decodeToken(data.token);
+
   }
 
-  getCurrentLoggedUser() {
-    this.authService.getCurrentLoggedUser().subscribe(res => {
-      this.authService.isAdmin(res);
-      this.sharedService.sendLoggedUserMessage(res);
-    }
-    );;
 
+  decodeToken(data) {
+    const helper = new JwtHelperService();
+    let currentUser = helper.decodeToken(data);
+    this.authService.currentUserSubject.next(currentUser);
   }
 
   navigateToRegistration() {
