@@ -10,6 +10,7 @@ import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { HeaderComponent } from '../layout/header/header.component';
 import { AllEmployeesListComponent } from './employees/all-employees-list/all-employees-list.component';
 import { CommonModule } from '@angular/common';
+import { AllVehiclesListComponent } from './vehicles/all-vehicles-list/all-vehicles-list.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { CommonModule } from '@angular/common';
         DashboardComponent,
         SidebarComponent,
         HeaderComponent,
-        AllEmployeesListComponent],
+        AllEmployeesListComponent,
+        AllVehiclesListComponent],
     providers: [TokenInterceptorService,
         {
             provide: HTTP_INTERCEPTORS,

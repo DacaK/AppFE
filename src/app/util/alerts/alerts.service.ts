@@ -1,80 +1,83 @@
-// import { Injectable } from '@angular/core';
-// import { AlertType, Alerts } from './alerts.model';
+import { Injectable } from '@angular/core';
+import { AlertType, Alerts } from './alerts.model';
+import { Subject, Observable } from 'rxjs';
+import { AlertsMessage, AlertsMessageWrapper } from './alerts-message.model';
 
-// @Injectable()
-// export class AlertsService {
 
-//     private alertSettings$ = new Subject<Alert>();
+@Injectable()
+export class AlertsService {
 
-//     constructor(
-//         private translate: TranslateService,
-//     ) { }
+    private alertSettings$ = new Subject<Alerts>();
 
-//     getAlert(): Observable<any> {
-//         return this.alertSettings$.asObservable();
-//     }
+    constructor(
+    
+    ) { }
 
-//     success(message: string, title?: string) {
-//         this.showAlert(AlertType.Success, message, title);
-//     }
+    getAlert(): Observable<any> {
+        return this.alertSettings$.asObservable();
+    }
 
-//     error(message: string, title?: string) {
-//         this.showAlert(AlertType.Danger, message, title);
-//     }
+    success(message: string, title?: string) {
+        this.showAlert(AlertType.Success, message, title);
+    }
 
-//     info(message: string, title?: string) {
-//         this.showAlert(AlertType.Info, message, title);
-//     }
+    error(message: string, title?: string) {
+        this.showAlert(AlertType.Danger, message, title);
+    }
 
-//     warning(message: string, title?: string) {
-//         this.showAlert(AlertType.Warning, message, title);
-//     }
+    info(message: string, title?: string) {
+        this.showAlert(AlertType.Info, message, title);
+    }
 
-//     showAlert(type: AlertType, message: string, title?: string) {
-//         this.alertSettings$.next(<Alerts>{ type: type, message: message, title: title });
-//     }
+    warning(message: string, title?: string) {
+        this.showAlert(AlertType.Warning, message, title);
+    }
 
-//     clear() {
-//         this.alertSettings$.next();
-//     }
+    showAlert(type: AlertType, message: string, title?: string) {
+        this.alertSettings$.next(<Alerts>{ type: type, message: message, title: title });
+    }
 
-//     createAlertAndFieldValidationList(res: Response): AlertMessage[] {
-//         let listAlertAndFieldValidation: AlertMessageWrapper;
-//         listAlertAndFieldValidation = res.json() as AlertMessageWrapper;
-//         return listAlertAndFieldValidation.messages;
-//     }
+    clear() {
+        this.alertSettings$.next();
+    }
 
-//     showAlertAndFieldMessage(res: Response, fieldsErrorText, formElements) {
-//         let alertMessageList: AlertMessage[] = this.createAlertAndFieldValidationList(res)
-//         for (let allertMessage of alertMessageList) {
-//             if (allertMessage.field == null) {
-//                 this.showAlertMessage(allertMessage);
-//             } else {
-//                 this.setFieldValidationError(allertMessage, fieldsErrorText, formElements);
-//             }
-//         }
-//     }
+    createAlertAndFieldValidationList(res: Response): AlertsMessage[] {
+        let listAlertAndFieldValidation: AlertsMessageWrapper;
+        listAlertAndFieldValidation = res.json() as AlertsMessageWrapper;
+        return listAlertAndFieldValidation.messages;
+    }
 
-//     showAlertMessage(allertMessage: AlertMessage) {
-//         switch (allertMessage.severity) {
-//             case 'SUCCESS':
-//                 this.success(this.translate.instant(allertMessage.text));
-//                 break;
-//             case 'ERROR':
-//                 this.error(this.translate.instant(allertMessage.text));
-//                 break;
-//             case 'INFO':
-//                 this.info(this.translate.instant(allertMessage.text));
-//                 break;
-//             case 'WARNING':
-//                 this.warning(this.translate.instant(allertMessage.text));
-//                 break;
-//         }
-//     }
+    showAlertAndFieldMessage(res: Response, fieldsErrorText, formElements) {
+        let alertMessageList: AlertsMessage[] = this.createAlertAndFieldValidationList(res)
+        for (let allertMessage of alertMessageList) {
+            if (allertMessage.field == null) {
+                this.showAlertMessage(allertMessage);
+            } else {
+                this.setFieldValidationError(allertMessage, fieldsErrorText, formElements);
+            }
+        }
+    }
 
-//     setFieldValidationError(allertMessage: AlertMessage, fieldsErrorText, formElements) {
-//         if (formElements.get(allertMessage.field)) {
-//             fieldsErrorText[allertMessage.field] = allertMessage.text;
-//         }
-//     }
-// }
+    showAlertMessage(allertMessage: AlertsMessage) {
+        switch (allertMessage.severity) {
+            case 'SUCCESS':
+                this.success(allertMessage.text);
+                break;
+            case 'ERROR':
+                this.error(allertMessage.text);
+                break;
+            case 'INFO':
+                this.info(allertMessage.text);
+                break;
+            case 'WARNING':
+                this.warning(allertMessage.text);
+                break;
+        }
+    }
+
+    setFieldValidationError(allertMessage: AlertsMessage, fieldsErrorText, formElements) {
+        if (formElements.get(allertMessage.field)) {
+            fieldsErrorText[allertMessage.field] = allertMessage.text;
+        }
+    }
+}

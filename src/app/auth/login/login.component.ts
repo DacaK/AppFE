@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AlertsService } from 'src/app/util/alerts/alerts.service';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class LoginComponent implements OnInit {
   @ViewChild('loginForm') loginForm: NgForm;
   employee: Employee = {};
+  message: string;
   constructor(
     private router: Router,
     private authService: AuthService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private alertsService: AlertsService
   ) { }
 
   ngOnInit() {
@@ -32,7 +35,7 @@ export class LoginComponent implements OnInit {
         this.onSuccess(res);
       },
       (err) => {
-        console.log("err");
+        this.alertsService.error("Invalid username or password");
       })
     this.loginForm.reset();
   }

@@ -22,7 +22,7 @@ export class AuthService {
 
 
 
-    constructor(private http: HttpClient, private sharedService: SharedService) {
+    constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject(this.getDecodedToken());
         this.currentUser$ = this.currentUserSubject.asObservable();
 
