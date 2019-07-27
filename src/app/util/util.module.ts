@@ -6,6 +6,7 @@ import { AlertsService } from './alerts/alerts.service';
 import { AlertModule } from "ngx-bootstrap";
 import { CommonModule } from '@angular/common';
 import { AlertsComponent } from './alerts/alerts.component';
+import { ConfirmModal } from './confirmation-modal/confirm-modal.component';
 
 
 const utilRoutes: Routes = [
@@ -20,8 +21,10 @@ const utilRoutes: Routes = [
     exports: [AlertsComponent],
     declarations: [
         NotFoundComponent,
-        AlertsComponent
+        AlertsComponent,
+        ConfirmModal
     ],
     providers: [SharedService, AlertsService],
+    entryComponents: [ConfirmModal]
 })
 export class UtilModule { }

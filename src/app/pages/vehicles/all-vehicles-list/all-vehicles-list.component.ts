@@ -1,8 +1,15 @@
+import { AlertsService } from './../../../util/alerts/alerts.service';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+
+import { Vehicle } from 'src/app/entities/vehicle/vehicle';
+
+import { ConfirmModal } from 'src/app/util/confirmation-modal/confirm-modal.component';
+
 import { PopupService } from './../../popup.service';
 import { VehicleService } from './../../../entities/vehicle/vehicles.service';
-import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { Vehicle } from 'src/app/entities/vehicle/vehicle';
+
 
 @Component({
   selector: 'app-all-vehicles-list',
@@ -11,14 +18,22 @@ import { Vehicle } from 'src/app/entities/vehicle/vehicle';
 })
 export class AllVehiclesListComponent implements OnInit {
 
+  bsModalRef: BsModalRef;
   private vehicleSubscription: Subscription;
   private vehicleList: Vehicle[] = [];
   settings = {};
+  template: any;
   constructor(
     private vehicleService: VehicleService,
-    private popupService: PopupService) { }
+    private popupService: PopupService,
+    private modalService: BsModalService,
+    private alertsService: AlertsService) { }
 
   ngOnInit() {
+    this.loadVehicles();
+  }
+
+  loadVehicles() {
     this.vehicleSubscription = this.vehicleService.getAllVehicles().subscribe(
       res => this.onSuccess(res),
       err => console.log("Cannot get vehicles"))
@@ -26,7 +41,6 @@ export class AllVehiclesListComponent implements OnInit {
 
   onSuccess(data) {
     this.vehicleList = data;
-    console.log(this.vehicleList);
     this.tableHeaders();
   }
 
@@ -38,8 +52,44 @@ export class AllVehiclesListComponent implements OnInit {
 
 
   openModal(template) {
-    this.popupService.openModal(template);
+    this.template = template;
+    this.popupService.openModal(this.template);
 
+  }
+
+  customAction(value) {
+    switch (value.action) {
+      case 'edit':
+        this.editVehicle(value.data);
+        break;
+      case 'delete':
+        this.deleteVehice(value.data);
+        break;
+    }
+  }
+
+  editVehicle(data) {
+    console.log(data.id);
+  }
+
+  deleteVehice(data) {
+    const initialState = {
+      title: 'Are you sure you want to delete this item'
+    }
+    this.bsModalRef = this.modalService.show(ConfirmModal, { initialState })
+    this.bsModalRef.content.onClose = () => {
+      this.bsModalRef.hide();
+    };
+    this.bsModalRef.content.onSave = () => {
+      this.onDelete(data);
+      this.bsModalRef.hide();
+    };
+  }
+
+  onDelete(data) {
+    this.vehicleService.deleteVehicle(data.id).subscribe(res => {
+      this.alertsService.info("Succesfuly deleted!");
+    })
   }
 
   tableHeaders() {
@@ -49,20 +99,26 @@ export class AllVehiclesListComponent implements OnInit {
         brand: {
           title: 'Brand',
         },
-        consumption: {
-          title: 'Consumption'
-        },
-        cubage: {
-          title: 'Cubage'
-        },
-        distance: {
-          title: 'Distance'
+        model: {
+          title: 'Model',
         },
         vehicleNum: {
           title: 'Vehicle Number'
         },
+        licenceNum: {
+          title: 'Licence Number'
+        },
+        distance: {
+          title: 'Distance'
+        },
         lastService: {
           title: 'Last service'
+        },
+        cubage: {
+          title: 'Cubage'
+        },
+        consumption: {
+          title: 'Consumption'
         },
         isAvailable: {
           title: 'Available'
@@ -72,8 +128,18 @@ export class AllVehiclesListComponent implements OnInit {
         add: false,
         edit: false,
         delete: false,
+        columnTitle: "Actions",
+        position: "right",
+        custom: [{
+          name: 'edit',
+          title: '<i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Vehicle">&nbsp;</i>'
+        }, {
+          name: 'delete',
+          title: '<i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Vehicle">&nbsp;</i>'
+        }]
       },
       edit: false,
+
 
     }
 

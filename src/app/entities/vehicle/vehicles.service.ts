@@ -6,16 +6,22 @@ import { Vehicle } from './vehicle';
 @Injectable()
 export class VehicleService {
 
-    private addVehicle: string = '/vehicle';
-    private getVehicles: string = '/vehicles';
+    private addVehicleUrl: string = '/vehicle';
+    private getVehiclesUrl: string = '/vehicles';
+    private deleteVehicleUrl: string = '/delete'
     constructor(private http: HttpClient) {
     }
 
     getAllVehicles() {
-        return this.http.get(AppSettings.APP_ENDPOINT + this.getVehicles);
+        return this.http.get(AppSettings.APP_ENDPOINT + this.getVehiclesUrl);
     }
 
     addNewVehicle(vehicle: Vehicle) {
-        return this.http.post(AppSettings.APP_ENDPOINT + this.addVehicle, vehicle);
+        return this.http.post(AppSettings.APP_ENDPOINT + this.addVehicleUrl, vehicle);
+    }
+
+    deleteVehicle(id: number) {
+
+        return this.http.put(AppSettings.APP_ENDPOINT + this.deleteVehicleUrl + '/' + id, id);
     }
 }

@@ -6,16 +6,23 @@
     <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="openModal(template)"><i
         class="fas fa-plus fa-sm text-white-50"></i>
       Add vehicle</a>
+
   </div>
 
   <div class="row justify-content-md-center">
     <div class="col-md-12">
+      <app-alerts></app-alerts>
+    </div>
+    <div class="col-md-12">
       <div class="table table-bordered table-responsive table-hover">
-        <ng2-smart-table [settings]="settings" [source]="vehicleList"></ng2-smart-table>
+        <ng2-smart-table [settings]="settings" [source]="vehicleList" (userRowSelect)="funct($event)"
+          (custom)="customAction($event)"></ng2-smart-table>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <ng-template #template>
   <app-add-vehicle-popup (refreshTableEvent)="refreshTableEvent($event)"></app-add-vehicle-popup>
