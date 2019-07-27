@@ -27,6 +27,8 @@
   </div>
 
   <!-- Nav Item - Pages Collapse Menu -->
+
+  <!-- employees menu -->
   <li class="nav-item" *ngIf="isAdmin">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
       aria-controls="collapseTwo">
@@ -41,6 +43,23 @@
       </div>
     </div>
   </li>
+
+  <!-- vehicles menu -->
+  <li class="nav-item" *ngIf="isAdmin">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+      aria-controls="collapseThree">
+      <i class="fas fa-car"></i>
+
+      <span>Vehicles</span>
+    </a>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Vehicles list:</h6>
+        <a class="collapse-item" routerLink="/vehicles" routerLinkActive="router-link-active">All vehicles list</a>
+      </div>
+    </div>
+  </li>
+
 
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">

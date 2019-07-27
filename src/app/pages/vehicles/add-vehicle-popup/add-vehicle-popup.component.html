@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Add vehicle</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body ">
+  <form #addVehicleForm="ngForm">
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+          <label for="model">Model</label>
+          <input type="text" class="form-control" id="model" name="model" [(ngModel)]="vehicle.model" required>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="brand">Brand</label>
+          <input type="text" class="form-control" id="brand" name="brand" [(ngModel)]="vehicle.brand" required>
+        </div>
+      </div>
+    </div>
+    <!-- End of first row -->
+
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+          <label for="consumption">Consumption</label>
+          <input type="number" class="form-control" id="consumption" name="consumption"
+            [(ngModel)]="vehicle.consumption" required>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="cubage">Cubage</label>
+          <input type="number" class="form-control" id="cubage" name="cubage" [(ngModel)]="vehicle.cubage" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- End of second row -->
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="vehicleNum">Vehicle Number</label>
+          <input type="text" class="form-control" id="vehicleNum" name="vehicleNum" [(ngModel)]="vehicle.vehicleNum"
+            required>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+          <label for="licenceNum">Licence Number</label>
+          <input type="text" class="form-control" id="licenceNum" name="licenceNum" [(ngModel)]="vehicle.licenceNum"
+            required>
+        </div>
+      </div>
+    </div>
+    <!-- End of third row -->
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="distance">Distance</label>
+          <input type="number" class="form-control" id="distance" name="distance" [(ngModel)]="vehicle.distance"
+            required>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+          <label for="lastService">Last service</label>
+          <input type="number" class="form-control" id="lastService" name="lastService"
+            [(ngModel)]="vehicle.lastService" required>
+        </div>
+      </div>
+    </div>
+  </form>
+  <app-alerts></app-alerts>
+</div>
+
+<div class="modal-footer ">
+  <button type="submit " class="btn btn-primary" [disabled]="addVehicleForm.invalid || isSubmitted"
+    (click)="onSave(addVehicleForm)">Save
+    changes
+  </button>
+  <button type="button " class="btn btn-secondary" (click)="onClose()">Close</button>
+</div>

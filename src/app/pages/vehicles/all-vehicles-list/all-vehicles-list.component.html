@@ -1,3 +1,22 @@
-<p>
-  all-vehicles-list works!
-</p>
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">All Vehicle List</h1>
+    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="openModal(template)"><i
+        class="fas fa-plus fa-sm text-white-50"></i>
+      Add vehicle</a>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-12">
+      <div class="table table-bordered table-responsive table-hover">
+        <ng2-smart-table [settings]="settings" [source]="vehicleList"></ng2-smart-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <app-add-vehicle-popup (refreshTableEvent)="refreshTableEvent($event)"></app-add-vehicle-popup>
+</ng-template>

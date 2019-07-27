@@ -15,6 +15,7 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
 
   private employeesSubscription: Subscription;
   employeeList: Employee[] = [];
+  settings = {};
 
   constructor(private employeeService: EmployeeService) { }
 
@@ -27,6 +28,7 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
   onSuccess(data) {
     console.log(data);
     this.employeeList = data;
+    this.tableHeaders();
   }
 
 
@@ -36,35 +38,37 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
 
 
 
-  settings = {
-    columns: {
-      firstName: {
-        title: 'First Name',
-      },
-      lastName: {
-        title: 'Last Name'
-      },
-      username: {
-        title: 'Username'
-      },
-      email: {
-        title: 'Email'
-      },
-      authority: {
-        title: 'role',
-        editable: false,
-        valuePrepareFunction: (authority) => {
-          return authority.role;
+  tableHeaders() {
+    this.settings = {
+      columns: {
+        firstName: {
+          title: 'First Name',
+        },
+        lastName: {
+          title: 'Last Name'
+        },
+        username: {
+          title: 'Username'
+        },
+        email: {
+          title: 'Email'
+        },
+        authority: {
+          title: 'role',
+          editable: false,
+          valuePrepareFunction: (authority) => {
+            return authority.role;
+          }
         }
-      }
-    },
+      },
 
-    actions: {
-      add: false,
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+      },
       edit: false,
-      delete: false,
-    },
-    edit: false,
-  };
+    };
+  }
 
 }

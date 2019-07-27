@@ -18,14 +18,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { CommonModule } from '@angular/common';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-
   ],
   imports: [
     CommonModule,
