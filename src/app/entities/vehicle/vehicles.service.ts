@@ -8,6 +8,8 @@ export class VehicleService {
 
     private addVehicleUrl: string = '/vehicle';
     private getVehiclesUrl: string = '/vehicles';
+    public getVehicleByIdUrl: string = '/vehicle'
+    public updateVehicleByIdUrl: string = '/vehicle'
     private deleteVehicleUrl: string = '/delete'
     constructor(private http: HttpClient) {
     }
@@ -16,12 +18,19 @@ export class VehicleService {
         return this.http.get(AppSettings.APP_ENDPOINT + this.getVehiclesUrl);
     }
 
+    getVehicleById(id: number) {
+        return this.http.get(AppSettings.APP_ENDPOINT + this.getVehicleByIdUrl + '/' + id);
+    }
+
     addNewVehicle(vehicle: Vehicle) {
         return this.http.post(AppSettings.APP_ENDPOINT + this.addVehicleUrl, vehicle);
     }
 
-    deleteVehicle(id: number) {
+    updateVehicle(vehicle: Vehicle) {
+        return this.http.post(AppSettings.APP_ENDPOINT + this.updateVehicleByIdUrl, vehicle);
+    }
 
+    deleteVehicle(id: number) {
         return this.http.put(AppSettings.APP_ENDPOINT + this.deleteVehicleUrl + '/' + id, id);
     }
 }

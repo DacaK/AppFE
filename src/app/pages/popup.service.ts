@@ -9,12 +9,8 @@ export class PopupService {
 
     modalRef: BsModalRef;
 
-
-    onUserRowSelected(data) {
-        // this.selectedItems = data.selected;
-    }
-
     openModal(template: TemplateRef<any>) {
+
         this.modalRef = this.modalService.show(
             template,
             Object.assign({}, { class: 'modal-dialog-centered' }));

@@ -111,7 +111,8 @@ a:hover {
 }
 
 a:not([href]):not([tabindex]) {
-    color: inherit;
+    cursor: pointer;
+    color: white;
     text-decoration: none;
 }
 

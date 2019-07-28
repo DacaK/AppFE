@@ -23,6 +23,7 @@ export class AllVehiclesListComponent implements OnInit {
   private vehicleList: Vehicle[] = [];
   settings = {};
   template: any;
+  selectedItem: number;
   constructor(
     private vehicleService: VehicleService,
     private popupService: PopupService,
@@ -45,31 +46,17 @@ export class AllVehiclesListComponent implements OnInit {
   }
 
   refreshTableEvent(data) {
-    console.log(data);
-    this.vehicleList.push(data);
-    this.tableHeaders();
+    this.loadVehicles();
   }
 
-
-  openModal(template) {
-    this.template = template;
-    this.popupService.openModal(this.template);
-
+  addVehicleModal(template) {
+    this.selectedItem = null;
+    this.popupService.openModal(template);
   }
 
-  customAction(value) {
-    switch (value.action) {
-      case 'edit':
-        this.editVehicle(value.data);
-        break;
-      case 'delete':
-        this.deleteVehice(value.data);
-        break;
-    }
-  }
-
-  editVehicle(data) {
-    console.log(data.id);
+  editVehicleModal(data, template) {
+    this.selectedItem = data.id;
+    this.popupService.openModal(template);
   }
 
   deleteVehice(data) {
@@ -88,8 +75,20 @@ export class AllVehiclesListComponent implements OnInit {
 
   onDelete(data) {
     this.vehicleService.deleteVehicle(data.id).subscribe(res => {
+      this.loadVehicles();
       this.alertsService.info("Succesfuly deleted!");
     })
+  }
+
+  customAction(value, template) {
+    switch (value.action) {
+      case 'edit':
+        this.editVehicleModal(value.data, template);
+        break;
+      case 'delete':
+        this.deleteVehice(value.data);
+        break;
+    }
   }
 
   tableHeaders() {
@@ -139,9 +138,11 @@ export class AllVehiclesListComponent implements OnInit {
         }]
       },
       edit: false,
-
-
     }
+  }
+
+  ngOnDestroy() {
+    this.vehicleSubscription.unsubscribe();
 
   }
 }

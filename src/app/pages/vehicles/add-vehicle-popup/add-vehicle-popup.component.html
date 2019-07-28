@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">Add vehicle</h4>
+  <h4 class="modal-title pull-left">{{selectedItem ? 'Update vehicle' : 'Add vehicle'}}</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -81,5 +81,5 @@
     (click)="onSave(addVehicleForm)">Save
     changes
   </button>
-  <button type="button " class="btn btn-secondary" (click)="onClose()">Close</button>
+  <button type="button " class="btn btn-secondary" (click)="onClose(addVehicleForm)">Close</button>
 </div>

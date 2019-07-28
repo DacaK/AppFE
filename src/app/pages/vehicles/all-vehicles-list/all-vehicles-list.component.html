@@ -3,7 +3,7 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">All Vehicle List</h1>
-    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="openModal(template)"><i
+    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="addVehicleModal(template)"><i
         class="fas fa-plus fa-sm text-white-50"></i>
       Add vehicle</a>
 
@@ -15,8 +15,8 @@
     </div>
     <div class="col-md-12">
       <div class="table table-bordered table-responsive table-hover">
-        <ng2-smart-table [settings]="settings" [source]="vehicleList" (userRowSelect)="funct($event)"
-          (custom)="customAction($event)"></ng2-smart-table>
+        <ng2-smart-table [settings]="settings" [source]="vehicleList" (userRowSelect)="getRow($event)"
+          (custom)="customAction($event, template)"></ng2-smart-table>
       </div>
     </div>
   </div>
@@ -25,5 +25,6 @@
 
 
 <ng-template #template>
-  <app-add-vehicle-popup (refreshTableEvent)="refreshTableEvent($event)"></app-add-vehicle-popup>
+  <app-add-vehicle-popup (refreshTableEvent)="refreshTableEvent($event)" [selectedItem]="selectedItem">
+  </app-add-vehicle-popup>
 </ng-template>
