@@ -8,6 +8,8 @@ export class VehicleService {
 
     private addVehicleUrl: string = '/vehicle';
     private getVehiclesUrl: string = '/vehicles';
+    private getAvailableVehiclesUrl: string = '/allavaliable';
+    private getUnvailableVehiclesUrl: string = '/allunavaliable';
     public getVehicleByIdUrl: string = '/vehicle'
     public updateVehicleByIdUrl: string = '/vehicle'
     private deleteVehicleUrl: string = '/delete'
@@ -16,6 +18,13 @@ export class VehicleService {
 
     getAllVehicles() {
         return this.http.get(AppSettings.APP_ENDPOINT + this.getVehiclesUrl);
+    }
+    getAvailableVehicles() {
+        return this.http.get(AppSettings.APP_ENDPOINT + this.getAvailableVehiclesUrl);
+    }
+
+    getUnavailableVehicles() {
+        return this.http.get(AppSettings.APP_ENDPOINT + this.getUnvailableVehiclesUrl);
     }
 
     getVehicleById(id: number) {

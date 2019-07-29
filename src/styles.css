@@ -112,7 +112,6 @@ a:hover {
 
 a:not([href]):not([tabindex]) {
     cursor: pointer;
-    color: white;
     text-decoration: none;
 }
 
