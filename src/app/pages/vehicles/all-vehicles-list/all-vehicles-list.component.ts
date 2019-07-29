@@ -59,6 +59,13 @@ export class AllVehiclesListComponent implements OnInit {
     this.popupService.openModal(template);
   }
 
+  behicleServiceModal(data, template) {
+    this.selectedItem = data;
+    console.log(this.selectedItem);
+
+    this.popupService.openModal(template);
+  }
+
   deleteVehice(data) {
     const initialState = {
       title: 'Are you sure you want to delete this item'
@@ -80,10 +87,13 @@ export class AllVehiclesListComponent implements OnInit {
     })
   }
 
-  customAction(value, template) {
+  customAction(value, template, billServiceTemplate) {
     switch (value.action) {
       case 'edit':
         this.editVehicleModal(value.data, template);
+        break;
+      case 'vehicleService':
+        this.behicleServiceModal(value.data, billServiceTemplate);
         break;
       case 'delete':
         this.deleteVehice(value.data);
@@ -129,13 +139,19 @@ export class AllVehiclesListComponent implements OnInit {
         delete: false,
         columnTitle: "Actions",
         position: "right",
-        custom: [{
-          name: 'edit',
-          title: '<i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Vehicle">&nbsp;</i>'
-        }, {
-          name: 'delete',
-          title: '<i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Vehicle">&nbsp;</i>'
-        }]
+        custom: [
+          {
+            name: 'edit',
+            title: '<i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Vehicle"></i>'
+          },
+          {
+            name: 'vehicleService',
+            title: '<i class="fas fa-book" data-toggle="tooltip" data-placement="top" title="Add service book">&nbsp;</i>'
+          },
+          {
+            name: 'delete',
+            title: '<i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Vehicle"></i>'
+          }]
       },
       edit: false,
     }

@@ -16,7 +16,7 @@
     <div class="col-md-12">
       <div class="table table-bordered table-responsive table-hover">
         <ng2-smart-table [settings]="settings" [source]="vehicleList" (userRowSelect)="getRow($event)"
-          (custom)="customAction($event, template)"></ng2-smart-table>
+          (custom)="customAction($event, template, billServiceTemplate)"></ng2-smart-table>
       </div>
     </div>
   </div>
@@ -27,4 +27,8 @@
 <ng-template #template>
   <app-add-vehicle-popup (refreshTableEvent)="refreshTableEvent($event)" [selectedItem]="selectedItem">
   </app-add-vehicle-popup>
+</ng-template>
+
+<ng-template #billServiceTemplate>
+  <app-vehicle-service-popup [selectedItem]="selectedItem"></app-vehicle-service-popup>
 </ng-template>

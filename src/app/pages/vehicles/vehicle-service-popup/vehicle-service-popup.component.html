@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{selectedItem ? 'Update vehicle' : 'Add vehicle'}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body ">
+  <form #addServieBook="ngForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="companyName">Company name</label>
+          <input type="text" class="form-control" id="companyName" name="companyName"
+            [(ngModel)]="serviceBook.companyName" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="repairDate">Repair date</label>
+          <input type="date" class="form-control" id="repairDate" name="repairDate" [(ngModel)]="serviceBook.repairDate"
+            required>
+        </div>
+      </div>
+    </div>
+    <!-- End of first row -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="repairKilometers">Repair kilometers</label>
+          <input type="number" class="form-control" id="repairKilometers" name="repairKilometers"
+            [(ngModel)]="serviceBook.repairKilometers" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="serviceDescription">Service Description</label>
+          <input type="text" class="form-control" id="serviceDescription" name="serviceDescription"
+            [(ngModel)]="serviceBook.serviceDescription" required>
+          <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <app-alerts></app-alerts>
+</div>
+
+<div class="modal-footer ">
+  <button type="submit " class="btn btn-primary" [disabled]="addServieBook.invalid || isSubmitted"
+    (click)="onSave(addServieBook)">Save
+    changes
+  </button>
+  <button type="button " class="btn btn-secondary" (click)="onClose(addServieBook)">Close</button>
+</div>

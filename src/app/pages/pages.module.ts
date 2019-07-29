@@ -21,6 +21,7 @@ import { AvailableVehiclesComponent } from './vehicles/available-vehicles/availa
 
 import { PopupService } from './popup.service';
 import { UtilModule } from '../util/util.module';
+import { VehicleServicePopupComponent } from './vehicles/vehicle-service-popup/vehicle-service-popup.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { UtilModule } from '../util/util.module';
         AllVehiclesListComponent,
         AddVehiclePopupComponent,
         UnavailableVehiclesComponent,
-        AvailableVehiclesComponent
+        AvailableVehiclesComponent,
+        VehicleServicePopupComponent
     ],
     imports: [
         CommonModule,
