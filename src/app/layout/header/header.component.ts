@@ -30,12 +30,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router
   ) {
+
   }
 
   ngOnInit() {
     this.currentLoggedUserSubscription = this.authService.currentUser$.subscribe(
       res => {
         this.currentUser = res;
+
+
       }
     )
   }

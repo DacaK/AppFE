@@ -8,9 +8,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { Role } from '../entities/employee/role';
 import { AuthGuard } from '../auth/auth.guard';
 import { UnavailableVehiclesComponent } from './vehicles/unavailable-vehicles/unavailable-vehicles.component';
+import { VehiclesDetailsComponent } from './vehicles/vehicles-details/vehicles-details.component';
 
 const pagesRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
         path: 'employees',
         component: AllEmployeesListComponent,
@@ -35,6 +37,12 @@ const pagesRoutes: Routes = [
             {
                 path: 'unavailable',
                 component: UnavailableVehiclesComponent,
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'details',
+                component: VehiclesDetailsComponent,
                 canActivate: [AuthGuard],
                 data: { roles: [Role.ADMIN] }
             }

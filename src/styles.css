@@ -8823,3 +8823,7 @@ form.user .btn-user {
 body.sidebar-toggled footer.sticky-footer {
     width: 100%;
 }
+
+:host /deep/ ng2-smart-table {
+    font-size: 28px !important;
+}

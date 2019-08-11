@@ -22,6 +22,8 @@ import { AvailableVehiclesComponent } from './vehicles/available-vehicles/availa
 import { PopupService } from './popup.service';
 import { UtilModule } from '../util/util.module';
 import { VehicleServicePopupComponent } from './vehicles/vehicle-service-popup/vehicle-service-popup.component';
+import { TravelOrderComponent } from './travel-order/travel-order/travel-order.component';
+import { VehiclesDetailsComponent } from './vehicles/vehicles-details/vehicles-details.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { VehicleServicePopupComponent } from './vehicles/vehicle-service-popup/v
         AddVehiclePopupComponent,
         UnavailableVehiclesComponent,
         AvailableVehiclesComponent,
-        VehicleServicePopupComponent
+        VehicleServicePopupComponent,
+        TravelOrderComponent,
+        VehiclesDetailsComponent
     ],
     imports: [
         CommonModule,

@@ -21,11 +21,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private sharedService: SharedService,
     private alertsService: AlertsService
   ) { }
 
   ngOnInit() {
+    if (this.authService.currentUser$) {
+      this.router.navigate(['/']);
+    }
   }
 
   onLogin(data) {

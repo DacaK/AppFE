@@ -11,7 +11,8 @@ import { ConfirmModal } from './confirmation-modal/confirm-modal.component';
 
 const utilRoutes: Routes = [
     { path: 'not-found', component: NotFoundComponent },
-    { path: '**', redirectTo: '/not-found' }
+    { path: '**', redirectTo: '/not-found' },
+    { path: '**', redirectTo: '' }
 ]
 @NgModule({
     imports: [

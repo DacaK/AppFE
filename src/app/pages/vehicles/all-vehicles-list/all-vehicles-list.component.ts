@@ -1,3 +1,4 @@
+import { SharedService } from './../../../util/shared.service';
 import { AlertsService } from './../../../util/alerts/alerts.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -9,6 +10,7 @@ import { ConfirmModal } from 'src/app/util/confirmation-modal/confirm-modal.comp
 
 import { PopupService } from './../../popup.service';
 import { VehicleService } from './../../../entities/vehicle/vehicles.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,8 +27,10 @@ export class AllVehiclesListComponent implements OnInit {
   template: any;
   selectedItem: number;
   constructor(
+    private router: Router,
     private vehicleService: VehicleService,
     private popupService: PopupService,
+    private sharedService: SharedService,
     private modalService: BsModalService,
     private alertsService: AlertsService) { }
 
@@ -49,6 +53,12 @@ export class AllVehiclesListComponent implements OnInit {
     this.loadVehicles();
   }
 
+  getRow(data) {
+    console.log("getRow", data.data);
+    this.sharedService.updateDataSelection(data.data);
+    this.router.navigate(['/vehicles/details']);
+  }
+
   addVehicleModal(template) {
     this.selectedItem = null;
     this.popupService.openModal(template);
@@ -59,9 +69,9 @@ export class AllVehiclesListComponent implements OnInit {
     this.popupService.openModal(template);
   }
 
-  behicleServiceModal(data, template) {
+  vehicleServiceModal(data, template) {
     this.selectedItem = data;
-    console.log(this.selectedItem);
+    console.log("this.selectedItemthis.selectedItem", this.selectedItem);
 
     this.popupService.openModal(template);
   }
@@ -93,7 +103,7 @@ export class AllVehiclesListComponent implements OnInit {
         this.editVehicleModal(value.data, template);
         break;
       case 'vehicleService':
-        this.behicleServiceModal(value.data, billServiceTemplate);
+        this.vehicleServiceModal(value.data, billServiceTemplate);
         break;
       case 'delete':
         this.deleteVehice(value.data);
@@ -151,9 +161,19 @@ export class AllVehiclesListComponent implements OnInit {
           {
             name: 'delete',
             title: '<i class="fas fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Vehicle"></i>'
-          }]
+          }],
       },
       edit: false,
+      rowClassFunction(data) {
+        console.log("Daaaaata", data.data.distance);
+        if (data.data.distance > 300000) {
+          return 'aborted'
+        }
+        if (data.data.distance - data.data.lastService > 30000) {
+          return 'solved'
+        }
+
+      }
     }
   }
 
