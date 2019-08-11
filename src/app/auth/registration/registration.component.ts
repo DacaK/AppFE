@@ -4,6 +4,8 @@ import { Employee } from 'src/app/entities/employee/employee';
 import { AuthService } from '../auth.service';
 import { AlertsService } from 'src/app/util/alerts/alerts.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-registration',
@@ -12,19 +14,22 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
-
-  // @ViewChild('registrationForm') registrationForm: NgForm;
-  employee: Employee = {};
-  isSubmitted: boolean = false;
-
+  private currentLoggedUserSubscription: Subscription;
   registrationForm: FormGroup;
+  employee: Employee = {};
+  isSubmitted: boolean = false; public currentUser = {};
+
 
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private alertsService: AlertsService,
-    private router: Router) { }
+    private router: Router) {
+    // if (this.authService.currentUser$) {
+    //   this.router.navigate(['/']);
+    // }
+  }
 
 
   ngOnInit() {
@@ -35,6 +40,17 @@ export class RegistrationComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    this.currentLoggedUserSubscription = this.authService.currentUser$.subscribe(
+      res => {
+        this.currentUser = res;
+        if (this.currentUser) {
+          this.router.navigate(['/']);
+        }
+
+
+      }
+    )
 
   }
 
