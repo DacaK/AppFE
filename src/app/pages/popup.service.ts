@@ -16,6 +16,12 @@ export class PopupService {
             Object.assign({}, { class: 'modal-dialog-centered' }));
     }
 
+    openLargeModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(
+            template,
+            Object.assign({}, { class: 'modal-dialog-centered modal-lg' }));
+    }
+
     closeModal() {
         this.modalRef.hide();
     }

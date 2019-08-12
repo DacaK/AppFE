@@ -26,7 +26,6 @@ export class AllEmployeesListComponent implements OnInit, OnDestroy {
   }
 
   onSuccess(data) {
-    console.log(data);
     this.employeeList = data;
     this.tableHeaders();
   }

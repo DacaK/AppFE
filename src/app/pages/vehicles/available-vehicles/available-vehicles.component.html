@@ -1,18 +1,15 @@
-<div class="container-fluid">
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Available vehicles</h1>
+</div>
 
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Available vehicles</h1>
+<div class="row justify-content-md-center">
+  <div class="col-md-12">
+    <app-alerts></app-alerts>
   </div>
-
-  <div class="row justify-content-md-center">
-    <div class="col-md-12">
-      <app-alerts></app-alerts>
-    </div>
-    <div class="col-md-12">
-      <div class="table table-bordered table-responsive table-hover">
-        <ng2-smart-table [settings]="settings" [source]="availableVehicleList" (userRowSelect)="getRow($event)"
-          (custom)="customAction($event, template)"></ng2-smart-table>
-      </div>
+  <div class="col-md-12">
+    <div class="table table-bordered table-responsive table-hover">
+      <ng2-smart-table [settings]="settings" [source]="availableVehicleList" (userRowSelect)="getRow($event)"
+        (custom)="customAction($event, template)"></ng2-smart-table>
     </div>
   </div>
 </div>

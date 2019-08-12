@@ -1,14 +1,16 @@
-import { AvailableVehiclesComponent } from './vehicles/available-vehicles/available-vehicles.component';
-import { AllVehiclesListComponent } from './vehicles/all-vehicles-list/all-vehicles-list.component';
-import { AllEmployeesListComponent } from './employees/all-employees-list/all-employees-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { Role } from '../entities/employee/role';
 import { AuthGuard } from '../auth/auth.guard';
+
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AvailableVehiclesComponent } from './vehicles/available-vehicles/available-vehicles.component';
+import { AllVehiclesListComponent } from './vehicles/all-vehicles-list/all-vehicles-list.component';
+import { AllEmployeesListComponent } from './employees/all-employees-list/all-employees-list.component';
 import { UnavailableVehiclesComponent } from './vehicles/unavailable-vehicles/unavailable-vehicles.component';
 import { VehiclesDetailsComponent } from './vehicles/vehicles-details/vehicles-details.component';
+import { TravelOrderComponent } from './travel-order/travel-order/travel-order.component';
 
 const pagesRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -47,7 +49,13 @@ const pagesRoutes: Routes = [
                 data: { roles: [Role.ADMIN] }
             }
         ]
-    }
+    },
+    {
+        path: 'travel-order',
+        component: TravelOrderComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.ADMIN] }
+    },
 ]
 
 @NgModule({

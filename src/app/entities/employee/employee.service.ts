@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class EmployeeService {
 
     private getEmployees: string = '/getEmployees';
+    private getEmployee: string = '/getEmployee';
     constructor(
         private http: HttpClient
     ) { }
@@ -14,6 +15,10 @@ export class EmployeeService {
     getAllEmployees() {
         return this.http.get(AppSettings.APP_ENDPOINT + this.getEmployees);
 
+    }
+
+    getLoggedEmployee() {
+        return this.http.get(AppSettings.APP_ENDPOINT + this.getEmployee);
     }
 
 }

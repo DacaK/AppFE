@@ -1,0 +1,80 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{selectedItem ? 'Update vehicle' : 'Add vehicle'}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body ">
+  <form #addTravelOrderForm="ngForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="destination">Destination</label>
+          <input type="text" class="form-control" id="destination" name="destination"
+            [(ngModel)]="travelOrder.destination" required>
+        </div>
+      </div>
+    </div>
+    <!-- End of first row -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="vehicle">Vehicle</label>
+          <select [(ngModel)]="travelOrder.vehicle" name="vehicle" id="id" class="form-control">
+            <option value="" disabled selected>Vehicle
+            </option>
+            <option *ngFor="let vehicle of vehicleList" [ngValue]="vehicle"> {{vehicle.model}} {{vehicle.brand}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="dateStart">Start date</label>
+          <input type="date" class="form-control" id="dateStart" name="dateStart" [(ngModel)]="travelOrder.dateStart"
+            required>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="dateEnd">End date</label>
+          <input type="date" class="form-control" id="dateEnd" name="dateEnd" [(ngModel)]="travelOrder.dateEnd"
+            required>
+        </div>
+      </div>
+    </div>
+
+    <!-- End of second row -->
+
+
+    <!-- End of third row -->
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="actDistance">actDistance</label>
+          <input type="number" class="form-control" id="actDistance" name="actDistance"
+            [(ngModel)]="travelOrder.actDistance" required>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+          <label for="estDistance">estDistance</label>
+          <input type="number" class="form-control" id="estDistance" name="estDistance"
+            [(ngModel)]="travelOrder.estDistance" required>
+        </div>
+      </div>
+    </div>
+  </form>
+  <app-alerts></app-alerts>
+</div>
+
+<div class="modal-footer ">
+  <button type="submit " class="btn btn-primary" (click)="onSave(addTravelOrderForm)"
+    [disabled]="addTravelOrderForm.invalid || isSubmitted">Save
+    changes
+  </button>
+  <button type="button " class="btn btn-secondary" (click)="onClose(addTravelOrderForm)">Close</button>
+</div>
