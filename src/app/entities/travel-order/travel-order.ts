@@ -15,7 +15,8 @@ export class TravelOrder {
         public fuelConsumed?: number,
         public employee?: Employee,
         public travelStatus?: TravelStatus,
-        public vehicle?: Vehicle
+        public vehicle?: Vehicle,
+        public createdAt?: string
 
 
     ) { }

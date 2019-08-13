@@ -17,7 +17,6 @@ import { AlertsService } from './../../util/alerts/alerts.service';
 export class DashboardComponent implements OnInit {
 
   statusTravelOrderSubscription: Subscription;
-
   travelStatuses: TravelOrder[] = [];
 
   constructor(
@@ -26,7 +25,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.getChart();
     this.loadStatuses();
   }
@@ -39,11 +37,21 @@ export class DashboardComponent implements OnInit {
   }
 
   onSuccessStatus(data) {
+    let statusesPreviousMonth: TravelOrder[] = [];
     this.travelStatuses = data;
-    this.prepareChart();
+
+    for (let i = 0; i < this.travelStatuses.length; i++) {
+      const element = this.travelStatuses[i];
+      let createOrderDate = new Date(element.createdAt).getMonth();
+      let currentDate = new Date().getMonth();
+      if (currentDate - createOrderDate === 0) {
+        statusesPreviousMonth.push(element);
+      }
+    }
+    this.prepareChart(statusesPreviousMonth);
 
   }
-  prepareChart() {
+  prepareChart(statusesPreviousMonth) {
     let allStatuses = [];
     let statusCreated: any = [];
     let statusApproved: any = [];
@@ -54,24 +62,24 @@ export class DashboardComponent implements OnInit {
     let statusApprovedSum: number = 0;
     let statusRefusedSum: number = 0;
     let statusFinishedSum: number = 0;
-    for (let i = 0; i < this.travelStatuses.length; i++) {
-      if (this.travelStatuses[i].travelStatus.name === 'created') {
+    
+    for (let i = 0; i < statusesPreviousMonth.length; i++) {
+      if (statusesPreviousMonth[i].travelStatus.name === 'created') {
         statusCreatedSum++;
-        statusCreated.push(this.travelStatuses[i].travelStatus.id);
+        statusCreated.push(statusesPreviousMonth[i].travelStatus.id);
       }
-      else if (this.travelStatuses[i].travelStatus.name === 'approved') {
+      else if (statusesPreviousMonth[i].travelStatus.name === 'approved') {
         statusApprovedSum++;
-        statusApproved.push(this.travelStatuses[i].travelStatus.id);
+        statusApproved.push(statusesPreviousMonth[i].travelStatus.id);
       }
-      else if (this.travelStatuses[i].travelStatus.name === 'refused') {
+      else if (statusesPreviousMonth[i].travelStatus.name === 'refused') {
         statusRefusedSum++;
-        statusRefused.push(this.travelStatuses[i].travelStatus.id);
+        statusRefused.push(statusesPreviousMonth[i].travelStatus.id);
       }
       else {
         statusFinishedSum++
-        statusFinished.push(this.travelStatuses[i].travelStatus.id);
+        statusFinished.push(statusesPreviousMonth[i].travelStatus.id);
       }
-
     }
 
     allStatuses[0] = statusCreatedSum;
