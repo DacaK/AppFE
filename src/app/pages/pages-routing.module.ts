@@ -34,7 +34,7 @@ const pagesRoutes: Routes = [
                 path: 'available',
                 component: AvailableVehiclesComponent,
                 canActivate: [AuthGuard],
-                data: { roles: [Role.ADMIN] }
+                // data: { roles: [Role.ADMIN] }
             },
             {
                 path: 'unavailable',

@@ -45,20 +45,21 @@
   </li>
 
   <!-- vehicles menu -->
-  <li class="nav-item" *ngIf="isAdmin">
+  <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
       aria-controls="collapseThree">
       <i class="fas fa-car"></i>
-
       <span>Vehicles</span>
     </a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Vehicles list:</h6>
-        <a class="collapse-item" routerLink="/vehicles" routerLinkActive="router-link-active">All vehicles list</a>
+        <a *ngIf="isAdmin" class="collapse-item" routerLink="/vehicles" routerLinkActive="router-link-active">All
+          vehicles list</a>
         <a class="collapse-item" routerLink="/vehicles/available" routerLinkActive="router-link-active">Available
           vehicles</a>
-        <a class="collapse-item" routerLink="/vehicles/unavailable" routerLinkActive="router-link-active">Unavailable
+        <a *ngIf="isAdmin" class="collapse-item" routerLink="/vehicles/unavailable"
+          routerLinkActive="router-link-active">Unavailable
           vehicles</a>
       </div>
     </div>
