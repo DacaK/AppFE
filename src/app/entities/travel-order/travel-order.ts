@@ -1,5 +1,6 @@
 import { Employee } from "../employee/employee";
 import { Vehicle } from "../vehicle/vehicle";
+import { TravelStatus } from "./travel-status";
 
 export class TravelOrder {
     constructor(
@@ -13,7 +14,7 @@ export class TravelOrder {
         public estDistance?: number,
         public fuelConsumed?: number,
         public employee?: Employee,
-        // public travelStatus?: TravelStatus,
+        public travelStatus?: TravelStatus,
         public vehicle?: Vehicle
 
 

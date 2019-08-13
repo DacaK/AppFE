@@ -53,8 +53,7 @@ const pagesRoutes: Routes = [
     {
         path: 'travel-order',
         component: TravelOrderComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.ADMIN] }
+        canActivate: [AuthGuard]
     },
 ]
 
