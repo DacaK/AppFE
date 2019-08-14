@@ -11,6 +11,10 @@ import { AllEmployeesListComponent } from './employees/all-employees-list/all-em
 import { UnavailableVehiclesComponent } from './vehicles/unavailable-vehicles/unavailable-vehicles.component';
 import { VehiclesDetailsComponent } from './vehicles/vehicles-details/vehicles-details.component';
 import { TravelOrderComponent } from './travel-order/travel-order/travel-order.component';
+import { RefusedTravelOrderComponent } from './travel-order/refused-travel-order/refused-travel-order.component';
+import { FinishedTravelOrderComponent } from './travel-order/finished-travel-order/finished-travel-order.component';
+import { ApprovedTravelOrderComponent } from './travel-order/approved-travel-order/approved-travel-order.component';
+import { CreatedTravelOrderComponent } from './travel-order/created-travel-order/created-travel-order.component';
 
 const pagesRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -52,8 +56,37 @@ const pagesRoutes: Routes = [
     },
     {
         path: 'travel-order',
-        component: TravelOrderComponent,
-        canActivate: [AuthGuard]
+        children: [
+            {
+                path: '',
+                component: TravelOrderComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'created-travel-order',
+                component: CreatedTravelOrderComponent,
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'approved-travel-order',
+                component: ApprovedTravelOrderComponent,
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'refused-travel-order',
+                component: RefusedTravelOrderComponent,
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'finished-travel-order',
+                component: FinishedTravelOrderComponent,
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ADMIN] }
+            }
+        ]
     },
 ]
 
