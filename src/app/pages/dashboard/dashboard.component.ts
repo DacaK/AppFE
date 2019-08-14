@@ -6,6 +6,7 @@ import { TravelOrder } from 'src/app/entities/travel-order/travel-order';
 
 import { TravelOrderService } from './../../entities/travel-order/travel-order.service';
 import { AlertsService } from './../../util/alerts/alerts.service';
+import { log } from 'util';
 
 
 
@@ -25,7 +26,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getChart();
     this.loadStatuses();
   }
 
@@ -48,10 +48,11 @@ export class DashboardComponent implements OnInit {
         statusesPreviousMonth.push(element);
       }
     }
-    this.prepareChart(statusesPreviousMonth);
+    this.preparePieChart(statusesPreviousMonth);
+    this.prepareBarChart();
 
   }
-  prepareChart(statusesPreviousMonth) {
+  preparePieChart(statusesPreviousMonth) {
     let allStatuses = [];
     let statusCreated: any = [];
     let statusApproved: any = [];
@@ -62,7 +63,7 @@ export class DashboardComponent implements OnInit {
     let statusApprovedSum: number = 0;
     let statusRefusedSum: number = 0;
     let statusFinishedSum: number = 0;
-    
+
     for (let i = 0; i < statusesPreviousMonth.length; i++) {
       if (statusesPreviousMonth[i].travelStatus.name === 'created') {
         statusCreatedSum++;
@@ -90,13 +91,12 @@ export class DashboardComponent implements OnInit {
   }
 
   travelStatusPieChart(data) {
-    var travelStatusPieChart = new Chart('travelStatusPieChart', {
+    let travelStatusPieChart = new Chart('travelStatusPieChart', {
       type: 'pie',
       data: {
         datasets: [{
           data: data,
           backgroundColor: ['#36b9cc', '#1cc88a', '#ffff99', '#4e73df'],
-          hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
           hoverBorderColor: "rgba(234, 236, 244, 1)",
         }],
         labels: [
@@ -113,39 +113,116 @@ export class DashboardComponent implements OnInit {
           fontSize: 10,
           display: true,
         },
-
       }
     });
   }
 
-  getChart() {
-    // new Chart('lineChart', {
-    //   type: 'line',
-    //   data: {
-    //     labels: ["100", "200", "300", "400", "500", "600", "700", "800", "900", "1000", "1100", "1200"],
-    //     datasets: [{
-    //       label: 'Number of Items Sold in Months',
-    //       data: [5, 8, 9, 2, 3],
-    //       fill: false,
-    //       lineTension: 0.2,
-    //       borderColor: "red",
-    //       borderWidth: 1
-    //     }]
-    //   },
-    //   options: {
-    //     title: {
-    //       text: "Line Chart",
-    //       display: true
-    //     },
-    //     scales: {
-    //       yAxes: [{
-    //         ticks: {
-    //           beginAtZero: true
-    //         }
-    //       }]
-    //     }
-    //   }
-    // });
+  prepareBarChart() {
+    let statusCreated: any = [];
+    let statusApproved: any = [];
+    let statusFinished: any = [];
+    let statusRefused: any = [];
+
+    let lastSixMonthData = [];
+    var currentDate = new Date();
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let lastSixMonthLabel = []
+
+    for (let i = 0; i < 6; i++) {
+      lastSixMonthLabel.push(months[(currentDate.getMonth() - i)]);
+    }
+
+    for (var i = 0; i < 6; i++) {
+      let statusCreatedSum: number = 0;
+      let statusApprovedSum: number = 0;
+      let statusRefusedSum: number = 0;
+      let statusFinishedSum: number = 0;
+
+      for (var j = 0; j < this.travelStatuses.length; j++) {
+        if (new Date(this.travelStatuses[j].createdAt).getMonth() == (new Date().getMonth() - i)) {
+          if (this.travelStatuses[j].travelStatus.name === 'created') {
+            statusCreatedSum++;
+          }
+          else if (this.travelStatuses[j].travelStatus.name === 'approved') {
+            statusApprovedSum++;
+          }
+          else if (this.travelStatuses[j].travelStatus.name === 'refused') {
+            statusRefusedSum++;
+          }
+          else statusFinishedSum++;
+
+        }
+      }
+      statusCreated.push(statusCreatedSum);
+      statusApproved.push(statusApprovedSum);
+      statusFinished.push(statusFinishedSum);
+      statusRefused.push(statusRefusedSum);
+    }
+    lastSixMonthData[0] = lastSixMonthLabel.reverse();
+    lastSixMonthData[1] = statusCreated.reverse();
+    lastSixMonthData[2] = statusApproved.reverse();
+    lastSixMonthData[3] = statusRefused.reverse();
+    lastSixMonthData[4] = statusFinished.reverse();
+
+    this.travelStatusBarChart(lastSixMonthData);
+  }
+
+  travelStatusBarChart(data) {
+    var barChartData = {
+      labels: data[0],
+      datasets: [
+        {
+          label: "Created",
+          backgroundColor: "#36b9cc",
+          borderColor: "#36b9cc",
+          borderWidth: 1,
+          data: data[1]
+        },
+        {
+          label: "Approved",
+          backgroundColor: "#1cc88a",
+          borderColor: "#1cc88a",
+          borderWidth: 1,
+          data: data[2]
+        },
+        {
+          label: "Refused",
+          backgroundColor: "#ffff99",
+          borderColor: "#ffff99",
+          borderWidth: 1,
+          data: data[3]
+        },
+        {
+          label: "Finished",
+          backgroundColor: "#4e73df",
+          borderColor: "#4e73df",
+          borderWidth: 1,
+          data: data[4]
+        }
+      ]
+    };
+    var chartOptions = {
+      responsive: true,
+      legend: {
+        position: "top"
+      },
+      // title: {
+      //   display: true,
+      //   text: "Bar Chart"
+      // },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+    var myBarChart = new Chart('travelStatusBarChart', {
+      type: 'bar',
+      data: barChartData,
+      options: chartOptions
+    });
   }
 
 }
