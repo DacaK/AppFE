@@ -1,6 +1,3 @@
-import { AuthGuard } from './auth/auth.guard';
-import { AuthService } from './auth/auth.service';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -18,6 +15,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { CommonModule } from '@angular/common';
 
+//behind are imports
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +34,7 @@ import { CommonModule } from '@angular/common';
     AlertModule.forRoot(),
     UtilModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

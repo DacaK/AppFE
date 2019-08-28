@@ -5,12 +5,10 @@
     Create travel order</a>
 </div>
 
-
 <div class="row justify-content-md-center">
   <div class="col-md-12">
     <div class="table table-bordered table-responsive table-hover">
-      <ng2-smart-table [settings]="settings" [source]="traverOrderList"
-        (custom)="customEvent($event, travelOrderTemplate)"></ng2-smart-table>
+      <ng2-smart-table [settings]="settings" [source]="employeeOrders"></ng2-smart-table>
     </div>
   </div>
 </div>

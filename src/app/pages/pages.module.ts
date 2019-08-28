@@ -27,6 +27,9 @@ import { UtilModule } from '../util/util.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { TokenInterceptorService } from '../auth/token-interceptor.service';
 import { PopupService } from './popup.service';
+import { EmployeeTravelOrderComponent } from './travel-order/employee-travel-order/employee-travel-order.component';
+import { AuthGuard } from '../auth/auth.guard';
+import { AuthService } from '../auth/auth.service';
 
 @NgModule({
 
@@ -46,7 +49,8 @@ import { PopupService } from './popup.service';
         RefusedTravelOrderComponent,
         ApprovedTravelOrderComponent,
         CreatedTravelOrderComponent,
-        FinishedTravelOrderComponent
+        FinishedTravelOrderComponent,
+        EmployeeTravelOrderComponent
     ],
     imports: [
         CommonModule,
@@ -66,6 +70,7 @@ import { PopupService } from './popup.service';
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptorService,
             multi: true
-        }],
+        },
+        AuthService, AuthGuard],
 })
 export class PagesModule { }

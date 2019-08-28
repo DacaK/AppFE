@@ -76,19 +76,23 @@
     <div id="collapseTravelOrder" class="collapse" aria-labelledby="headingTravelOrder" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Custom TravelOrder:</h6>
-        <a class="collapse-item" class="collapse-item" routerLink="/travel-order"
+
+        <a class="collapse-item" class="collapse-item" routerLink="/travel-order/create-travel-order"
+          routerLinkActive="router-link-active">Create Travel Order</a>
+
+        <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order"
           routerLinkActive="router-link-active">All Travel Order</a>
 
-        <a class="collapse-item" class="collapse-item" routerLink="/travel-order/created-travel-order"
-          routerLinkActive="router-link-active">Created Travel Order</a>
+        <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order/created-travel-order"
+          routerLinkActive="router-link-active">Created Request</a>
 
-        <a class="collapse-item" class="collapse-item" routerLink="/travel-order/approved-travel-order"
+        <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order/approved-travel-order"
           routerLinkActive="router-link-active">Approved Travel Order</a>
 
-        <a class="collapse-item" class="collapse-item" routerLink="/travel-order/refused-travel-order"
+        <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order/refused-travel-order"
           routerLinkActive="router-link-active">Refused Travel Order</a>
 
-        <a class="collapse-item" class="collapse-item" routerLink="/travel-order/finished-travel-order"
+        <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order/finished-travel-order"
           routerLinkActive="router-link-active">Finished Travel Order</a>
 
       </div>

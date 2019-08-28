@@ -15,6 +15,7 @@ import { RefusedTravelOrderComponent } from './travel-order/refused-travel-order
 import { FinishedTravelOrderComponent } from './travel-order/finished-travel-order/finished-travel-order.component';
 import { ApprovedTravelOrderComponent } from './travel-order/approved-travel-order/approved-travel-order.component';
 import { CreatedTravelOrderComponent } from './travel-order/created-travel-order/created-travel-order.component';
+import { EmployeeTravelOrderComponent } from './travel-order/employee-travel-order/employee-travel-order.component';
 
 const pagesRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -85,6 +86,11 @@ const pagesRoutes: Routes = [
                 component: FinishedTravelOrderComponent,
                 canActivate: [AuthGuard],
                 data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'create-travel-order',
+                component: EmployeeTravelOrderComponent,
+                canActivate: [AuthGuard],
             }
         ]
     },

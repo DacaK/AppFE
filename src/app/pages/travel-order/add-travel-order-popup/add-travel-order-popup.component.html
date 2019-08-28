@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">{{selectedItem ? 'Update vehicle' : 'Add vehicle'}}</h4>
+  <h4 class="modal-title pull-left">{{travelOrderSelected ? 'Resolve Travel Order' : 'Add Travel Order'}}</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -7,66 +7,134 @@
 <div class="modal-body ">
   <form #addTravelOrderForm="ngForm">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-6">
         <div class="form-group">
-          <label for="destination">Destination</label>
-          <input type="text" class="form-control" id="destination" name="destination"
-            [(ngModel)]="travelOrder.destination" required>
+          <label for="destination">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="firstName"
+            [(ngModel)]="travelOrder.employee.firstName" required
+            [attr.disabled]="travelOrder.id!==undefined? '' : null">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="destination">last Name</label>
+          <input type="text" class="form-control" id="lastName" name="lastName"
+            [(ngModel)]="travelOrder.employee.lastName" required
+            [attr.disabled]="travelOrder.id!==undefined? '' : null">
         </div>
       </div>
     </div>
-    <!-- End of first row -->
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="destination">Destination</label>
+          <input type="text" class="form-control" id="destination" name="destination"
+            [(ngModel)]="travelOrder.destination" required [attr.disabled]="travelOrder.id!==undefined? '' : null">
+        </div>
+      </div>
+      <div class="col-6">
         <div class="form-group">
           <label for="vehicle">Vehicle</label>
-          <select [(ngModel)]="travelOrder.vehicle" name="vehicle" id="id" class="form-control">
-            <option value="" disabled selected>Vehicle
+          <select [(ngModel)]="vehicleModelDropdown" name="vehicleModelDropdown" class="form-control"
+            [attr.disabled]="travelOrder.id!==undefined? '' : null" (ngModelChange)="clearFilter($event)">
+            <option value="" disabled selected>--- Vehicle ---
             </option>
-            <option *ngFor="let vehicle of vehicleList" [ngValue]="vehicle"> {{vehicle.model}} {{vehicle.brand}}
+            <option *ngFor="let vehicle of vehicleList" [ngValue]="vehicle.id">
+              {{vehicle.model}} {{vehicle.brand}}
             </option>
           </select>
         </div>
       </div>
     </div>
+    <!-- End of first row -->
+
     <div class="row">
-      <div class="col-md-6 col-xs-6">
+      <div class="col-md-6 col-6">
         <div class="form-group">
           <label for="dateStart">Start date</label>
           <input type="date" class="form-control" id="dateStart" name="dateStart" [(ngModel)]="travelOrder.dateStart"
-            required>
+            [attr.disabled]="travelOrder.id!==undefined? '' : null" required>
         </div>
       </div>
-
-      <div class="col-md-6 col-xs-6">
+      <div class="col-md-6 col-6">
         <div class="form-group">
           <label for="dateEnd">End date</label>
-          <input type="date" class="form-control" id="dateEnd" name="dateEnd" [(ngModel)]="travelOrder.dateEnd"
-            required>
+          <input type="date" class="form-control" id="dateEnd" name="dateEnd" [(ngModel)]="travelOrder.dateEnd" required
+            [attr.disabled]="travelOrder.id!==undefined? '' : null">
         </div>
       </div>
     </div>
 
     <!-- End of second row -->
 
-
-    <!-- End of third row -->
     <div class="row">
-      <div class="col-md-6 col-xs-6">
+      <div class="col-md-6 col-6">
         <div class="form-group">
-          <label for="actDistance">actDistance</label>
-          <input type="number" class="form-control" id="actDistance" name="actDistance"
-            [(ngModel)]="travelOrder.actDistance" required>
+          <label for="estDistance">Distance estimation</label>
+          <input type="number" class="form-control" id="estDistance" name="estDistance"
+            [(ngModel)]="travelOrder.estDistance" required [attr.disabled]="travelOrder.id!==undefined? '' : null">
         </div>
       </div>
-      <div class="col-md-6 col-xs-12">
+      <div class="col-md-6 col-6"
+        *ngIf="travelOrder.id!==undefined && employee.authority?.role==='ADMIN' && travelOrder.travelStatus.id==4">
         <div class="form-group">
-          <label for="estDistance">estDistance</label>
-          <input type="number" class="form-control" id="estDistance" name="estDistance"
-            [(ngModel)]="travelOrder.estDistance" required>
+          <label for="actDistance">Actual distance</label>
+          <input type="number" class="form-control" id="actDistance" name="actDistance"
+            [(ngModel)]="travelOrder.actDistance" required [attr.disabled]="travelOrder.travelStatus.id!==4? '' : null">
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="actDistance">Employee Note</label>
+          <textarea class="form-control" rows="2" id="employeeNote" name="empNote" style="resize: none"
+            [(ngModel)]="travelOrder.empNote" [attr.disabled]="travelOrder.id!==undefined? '' : null">
+    </textarea>
+        </div>
+      </div>
+    </div>
+    <!-- End of third row -->
+
+    <div class="row" *ngIf="travelOrder.id!==undefined && employee.authority?.role==='ADMIN'">
+      <div class="col-md-12">
+        <label for="vehicle">Set status</label>
+        <select [(ngModel)]="travelOrder.travelStatus.id" name="travelStatus" id="travelStatus" class="form-control"
+          (ngModelChange)="changeStatus($event)">
+          <option [disabled]="travelOrder.travelStatus.id===1" value="" disabled selected>---
+            Select status ---
+          </option>
+          <option *ngFor="let status of travelStatuses" [ngValue]="status.id">
+            {{status.name}}
+          </option>
+        </select>
+        <br>
+      </div>
+    </div>
+
+    <div class="row"
+      *ngIf="travelOrder.id!==undefined && employee.authority?.role==='ADMIN' && travelOrder.travelStatus.id==4">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="estDistance">Bill (&euro;)</label>
+          <input [(ngModel)]="bill.sum" type="number" class="form-control" id="bill" name="bill">
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="travelOrder.id!==undefined && employee.authority?.role==='ADMIN'">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="actDistance">Admin Note</label>
+          <textarea class="form-control" rows="2" id="adminNote" name="adminNote" style="resize: none"
+            [(ngModel)]="travelOrder.adminNote">
+           </textarea>
+        </div>
+      </div>
+    </div>
+    <!--    <textarea class="form-control" rows="5" id="workingAreaName" name="text" style="resize: none" [(ngModel)]="workingAreaName">
+    </textarea> -->
   </form>
   <app-alerts></app-alerts>
 </div>

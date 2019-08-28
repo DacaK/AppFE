@@ -17,7 +17,5 @@ export class TravelOrder {
         public travelStatus?: TravelStatus,
         public vehicle?: Vehicle,
         public createdAt?: string
-
-
     ) { }
 }

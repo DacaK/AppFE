@@ -1,66 +1,64 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { PopupService } from './../../popup.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { TravelOrder } from 'src/app/entities/travel-order/travel-order';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AlertsService } from './../../../util/alerts/alerts.service';
 import { TravelOrderService } from './../../../entities/travel-order/travel-order.service';
-import { AlertsService } from 'src/app/util/alerts/alerts.service';
-import { PopupService } from './../../popup.service';
+import { TravelOrder } from 'src/app/entities/travel-order/travel-order';
 
 @Component({
-  selector: 'app-travel-order',
-  templateUrl: './travel-order.component.html',
-  styleUrls: ['./travel-order.component.css']
+  selector: 'app-employee-travel-order',
+  templateUrl: './employee-travel-order.component.html',
+  styleUrls: ['./employee-travel-order.component.css']
 })
-export class TravelOrderComponent implements OnInit {
+export class EmployeeTravelOrderComponent implements OnInit, OnDestroy {
 
-  travelOrderSubscription: Subscription;
-  traverOrderList: TravelOrder[] = [];
+  currentUserSubscription: Subscription;
+  employeeOrders: TravelOrder[] = [];
   travelOrder: TravelOrder = {};
+  currentUser: any;
   settings = {};
   constructor(
+    private authService: AuthService,
     private travelOrderService: TravelOrderService,
     private alertsService: AlertsService,
     private popupService: PopupService) { }
 
   ngOnInit() {
-    this.loadAllTravelOrders();
+    this.currentUserSubscription = this.authService.currentUser$.subscribe(
+      res => {
+        this.currentUser = res;
+      }
+    )
+    this.getTravelOrder();
   }
-  loadAllTravelOrders() {
-    this.travelOrderSubscription = this.travelOrderService.getAllTravelOrder().subscribe(
-      (res) => this.onSuccess(res),
-      (err) => this.alertsService.error("Something is wrong"));
+
+  getTravelOrder() {
+    console.log(this.currentUser.sub);
+    this.travelOrderService.employeeTravelOrder(this.currentUser.sub).subscribe(
+      res => this.onSuccess(res),
+      err => this.alertsService.error("Something is wrong")
+    )
   }
 
   onSuccess(data) {
-    this.traverOrderList = data;
-    console.log(this.traverOrderList);
+    this.employeeOrders = data;
+    console.log(this.employeeOrders);
     this.tableHeaders();
-
   }
-
   addTravelOrder(TemplateRef) {
     this.travelOrder = {};
     this.popupService.openLargeModal(TemplateRef);
   }
 
-  refreshTableEvent(data) {
-    this.loadAllTravelOrders();
+  refreshTableEvent() {
+    this.getTravelOrder();
   }
 
-  customEvent(event, travelOrderTemplate) {
-    this.travelOrder = event.data;
-    console.log(this.travelOrder);
-    this.popupService.openLargeModal(travelOrderTemplate);
-  }
   tableHeaders() {
     this.settings = {
       columns: {
-        employee: {
-          title: 'Full Name',
-          valuePrepareFunction: (employee) => {
-            return employee.firstName + ' ' + employee.lastName;
-          }
-        },
         destination: {
           title: 'Destination',
         },
@@ -101,14 +99,13 @@ export class TravelOrderComponent implements OnInit {
         edit: false,
         delete: false,
         position: "right",
-        custom: [
-          {
-            name: 'handleRequest',
-            title: '<i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Resolve the request"></i>'
-          }]
       },
       edit: false,
     };
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
 }

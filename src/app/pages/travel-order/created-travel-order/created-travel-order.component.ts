@@ -1,3 +1,4 @@
+import { SharedService } from './../../../util/shared.service';
 import { AlertsService } from 'src/app/util/alerts/alerts.service';
 import { Subscription } from 'rxjs';
 import { TravelOrderService } from './../../../entities/travel-order/travel-order.service';
@@ -26,7 +27,7 @@ export class CreatedTravelOrderComponent implements OnInit, OnDestroy {
   }
   onSuccess(data) {
     this.createdTravelOrder = data;
-    console.log(data);
+    console.log(this.createdTravelOrder.length);
     this.tableHeaders();
   }
 
