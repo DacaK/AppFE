@@ -1,11 +1,11 @@
 <h1 class="h3 mb-4 text-gray-800">Dashboard Page</h1>
 
-<div class="row">
+<div class="row" *ngIf="isAdmin">
     <div class="col-xl-8 col-lg-">
         <!-- Area Chart -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Travel Order statuses</h6>
+                <h6 class="m-0 font-weight-bold text-primary">All Travel Orders</h6>
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -17,20 +17,6 @@
                 Travel orders per month
             </div>
         </div>
-
-        <!-- Bar Chart -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-            </div>
-            <div class="card-body">
-                <div class="chart-pie pt-4">
-                </div>
-                <hr>
-                Styling
-            </div>
-        </div>
-
     </div>
 
     <!-- Donut Chart -->
@@ -48,6 +34,27 @@
 
                 <hr>
                 Travel orders created this month
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Area Chart -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Your travel orders</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <div class="container">
+                        <canvas id="employeeTravelStatusBarChart"></canvas>
+                    </div>
+                </div>
+                <hr>
+                Travel orders per month
             </div>
         </div>
     </div>

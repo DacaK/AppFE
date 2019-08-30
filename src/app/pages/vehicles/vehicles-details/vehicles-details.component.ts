@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
 
@@ -26,6 +27,7 @@ export class VehiclesDetailsComponent implements OnInit {
     private sharedService: SharedService,
     private serviceBook: ServiceBookService,
     private popupService: PopupService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -54,6 +56,9 @@ export class VehiclesDetailsComponent implements OnInit {
     this.loadVehicleDetails();
   }
 
+  navigateToVehicle() {
+    this.router.navigate(['/vehicles']);
+  }
 
   tableHeaders() {
     this.settings = {

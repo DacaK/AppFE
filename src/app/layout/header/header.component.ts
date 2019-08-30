@@ -50,16 +50,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     )
 
-    this.createdSubscription = this.travelOrderService.getCreatedTravelOrder().subscribe(
-      res => this.onSuccess(res),
-      err => this.alertsService.error('Something is wrong. Try later')
-    )
+    if (this.currentUser) {
+      this.createdSubscription = this.travelOrderService.getCreatedTravelOrder().subscribe(
+        res => this.onSuccess(res),
+        err => this.alertsService.error('Something is wrong. Try later')
+      )
+    }
   }
 
 
   onSuccess(data) {
     this.createdTravelOrder = data;
-    console.log("ssssssssssss", this.createdTravelOrder);
     this.createdTravelRequestLength = this.createdTravelOrder.length;
   }
 

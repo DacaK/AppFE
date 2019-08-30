@@ -3,9 +3,9 @@
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center">
     <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fas fa-laugh-wink"></i>
+      <i class="fas fa-car fa-2x text-gray-300"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">TEST</div>
+    <div class=" sidebar-brand-text mx-3">Vehicles</div>
   </a>
 
   <!-- Divider -->
@@ -81,7 +81,7 @@
           routerLinkActive="router-link-active">Create Travel Order</a>
 
         <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order"
-          routerLinkActive="router-link-active">All Travel Order</a>
+          routerLinkActive="router-link-active">All Travel Orders</a>
 
         <a *ngIf="isAdmin" class="collapse-item" class="collapse-item" routerLink="/travel-order/created-travel-order"
           routerLinkActive="router-link-active">Created Request</a>
@@ -102,31 +102,9 @@
   <!-- Divider -->
   <hr class="sidebar-divider">
 
-  <!-- Heading -->
-  <div class="sidebar-heading">
-    Addons
-  </div>
 
-  <!-- Nav Item - Charts -->
-  <li class="nav-item">
-    <a class="nav-link">
-      <i class="fas fa-fw fa-chart-area"></i>
-      <span>Charts</span></a>
-  </li>
 
-  <!-- Nav Item - Tables -->
-  <li class="nav-item">
-    <a class="nav-link">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Tables</span></a>
-  </li>
 
-  <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
 
-  <!-- Sidebar Toggler (Sidebar) -->
-  <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
 
 </ul>

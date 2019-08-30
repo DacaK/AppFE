@@ -1,8 +1,10 @@
 <h1 class="h3 mb-4 text-gray-800">All Employee List</h1>
 <div class="row justify-content-md-center">
   <div class="col-md-12">
+      <app-alerts></app-alerts>
     <div class="table table-bordered table-responsive table-hover">
-      <ng2-smart-table [settings]="settings" [source]="employeeList"></ng2-smart-table>
+      <ng2-smart-table [settings]="settings" [source]="employeeList" (custom)="ToggleActivation($event)">
+      </ng2-smart-table>
     </div>
   </div>
 </div>

@@ -34,7 +34,7 @@
   <!-- table -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Service information</h1>
-    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white"
       (click)="openServiceModal(billServiceTemplate)"><i class="fas fa-plus fa-sm text-white-50"></i>
       Add service book</a>
 
@@ -48,6 +48,11 @@
         <ng2-smart-table [settings]="settings" [source]="serviceBookList">
         </ng2-smart-table>
       </div>
+    </div>
+    <div class="col-md-12">
+      <a class="d-none d-sm-inline-block btn btn-sm  bg-secondary shadow-sm text-white" (click)="navigateToVehicle()"><i
+          class="fas fa-arrow-left fa-sm text-white-50"></i>
+        Previous page</a>
     </div>
   </div>
 </div>

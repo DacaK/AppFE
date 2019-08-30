@@ -2,7 +2,6 @@
   <div class="row justify-content-center">
 
     <div class="col-xl-6">
-
       <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
           <div class="row">
@@ -11,30 +10,6 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Create an Account!!</h1>
                 </div>
-                <!-- <form class="user" (ngSubmit)="onRegister(registrationForm)" #registrationForm="ngForm">
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="firstName" name="firstName"
-                      [(ngModel)]="employee.firstName" placeholder="First Name">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="lastName" name="lastName"
-                      [(ngModel)]="employee.lastName" placeholder="Last Name">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="email" name="email"
-                      [(ngModel)]="employee.email" placeholder="Email address">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="username" name="username"
-                      [(ngModel)]="employee.username" placeholder="Username">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="password" name="password"
-                      [(ngModel)]="employee.password" placeholder="Password">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
-                </form> -->
-
                 <form class="user" (ngSubmit)="onRegister(registrationForm)" [formGroup]="registrationForm">
                   <div class="form-group">
                     <input type="text" formControlName="firstName" class="form-control form-control-user"
@@ -43,10 +18,6 @@
                       <div *ngIf="f.firstName.errors.required">Name is required!</div>
                     </div>
                   </div>
-                  <!-- <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="lastName" name="lastName"
-                        [(ngModel)]="employee.lastName" placeholder="Last Name">
-                    </div> -->
                   <div class="form-group">
                     <input type="text" formControlName="lastName" class="form-control form-control-user"
                       [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" placeholder="Last Name" />
@@ -54,11 +25,6 @@
                       <div *ngIf="f.lastName.errors.required">Name is required!</div>
                     </div>
                   </div>
-
-                  <!-- <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="email" name="email"
-                      [(ngModel)]="employee.email" placeholder="Email address">
-                  </div> -->
                   <div class="form-group">
                     <input type="text" formControlName="email" class="form-control form-control-user"
                       [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email address" />
@@ -67,10 +33,7 @@
                       <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                     </div>
                   </div>
-                  <!-- <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="username" name="username"
-                      [(ngModel)]="employee.username" placeholder="Username">
-                  </div> -->
+
                   <div class="form-group">
                     <input type="text" formControlName="username" class="form-control form-control-user"
                       [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Username" />
@@ -79,10 +42,7 @@
 
                     </div>
                   </div>
-                  <!-- <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="password" name="password"
-                      [(ngModel)]="employee.password" placeholder="Password">
-                  </div> -->
+
                   <div class="form-group">
                     <input type="text" formControlName="password" class="form-control form-control-user"
                       [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Password" />
@@ -94,13 +54,11 @@
 
                   <button type="submit" class="btn btn-primary btn-user btn-block"
                     [disabled]="registrationForm.invalid || isSubmitted">Register Account</button>
-
                   <hr>
                   <div class="text-center">
                     <a (click)="navigateToLogin()">Back to login page</a>
                   </div>
                 </form>
-
               </div>
             </div>
           </div>

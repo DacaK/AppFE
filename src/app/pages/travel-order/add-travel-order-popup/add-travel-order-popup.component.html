@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">{{travelOrderSelected ? 'Resolve Travel Order' : 'Add Travel Order'}}</h4>
+  <h4 class="modal-title pull-left">{{travelOrderSelected.id ? 'Resolve Travel Order' : 'Add Travel Order'}}</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="onClose()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body ">
   <form #addTravelOrderForm="ngForm">
-    <div class="row">
+    <div class="row" *ngIf="travelOrder.id!==undefined && employee.authority?.role==='ADMIN'">
       <div class="col-6">
         <div class="form-group">
           <label for="destination">First Name</label>
@@ -40,7 +40,7 @@
             <option value="" disabled selected>--- Vehicle ---
             </option>
             <option *ngFor="let vehicle of vehicleList" [ngValue]="vehicle.id">
-              {{vehicle.model}} {{vehicle.brand}}
+              {{vehicle.brand}} {{vehicle.model}}
             </option>
           </select>
         </div>
@@ -102,10 +102,8 @@
         <label for="vehicle">Set status</label>
         <select [(ngModel)]="travelOrder.travelStatus.id" name="travelStatus" id="travelStatus" class="form-control"
           (ngModelChange)="changeStatus($event)">
-          <option [disabled]="travelOrder.travelStatus.id===1" value="" disabled selected>---
-            Select status ---
-          </option>
-          <option *ngFor="let status of travelStatuses" [ngValue]="status.id">
+          <option value="" disabled selected>--- Select status ---</option>
+          <option *ngFor="let status of travelStatuses" [ngValue]="status.id" [attr.disabled]="status.id==1? '' : null">
             {{status.name}}
           </option>
         </select>

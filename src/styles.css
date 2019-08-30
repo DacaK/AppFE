@@ -8827,3 +8827,8 @@ body.sidebar-toggled footer.sticky-footer {
 :host /deep/ ng2-smart-table {
     font-size: 28px !important;
 }
+
+.sidebar {
+    min-height: 250px;
+    height: 100%;
+}

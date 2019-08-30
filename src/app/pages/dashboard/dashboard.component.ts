@@ -6,7 +6,8 @@ import { TravelOrder } from 'src/app/entities/travel-order/travel-order';
 
 import { TravelOrderService } from './../../entities/travel-order/travel-order.service';
 import { AlertsService } from './../../util/alerts/alerts.service';
-import { log } from 'util';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Role } from 'src/app/entities/employee/role';
 
 
 
@@ -19,20 +20,41 @@ export class DashboardComponent implements OnInit {
 
   statusTravelOrderSubscription: Subscription;
   travelStatuses: TravelOrder[] = [];
+  employeeTravelStatuses: TravelOrder[] = [];
+  currentUser: any;
 
   constructor(
     private travelOrderService: TravelOrderService,
-    private alertsService: AlertsService
+    private alertsService: AlertsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.authService.currentUser$.subscribe(
+      res => {
+        this.currentUser = res;
+      }
+    )
+
     this.loadStatuses();
+    this.loadCurrentEmployeeStatuses();
+  }
+
+  get isAdmin() {
+    return this.currentUser && this.currentUser.pmfkm === Role.ADMIN;
   }
 
   loadStatuses() {
     this.statusTravelOrderSubscription = this.travelOrderService.getAllTravelOrder().subscribe(
       res => this.onSuccessStatus(res),
-      err => this.alertsService.error("Invalid username or password")
+      err => this.alertsService.error("Something is wrong!")
+    )
+  }
+
+  loadCurrentEmployeeStatuses() {
+    this.travelOrderService.employeeTravelOrder(this.currentUser.sub).subscribe(
+      res => this.onSuccessLoadES(res),
+      err => this.alertsService.error("Something is wrong")
     )
   }
 
@@ -51,6 +73,10 @@ export class DashboardComponent implements OnInit {
     this.preparePieChart(statusesPreviousMonth);
     this.prepareBarChart();
 
+  }
+  onSuccessLoadES(data) {
+    this.employeeTravelStatuses = data;
+    this.prepareEmployeeBarChart();
   }
   preparePieChart(statusesPreviousMonth) {
     let allStatuses = [];
@@ -167,6 +193,56 @@ export class DashboardComponent implements OnInit {
     this.travelStatusBarChart(lastSixMonthData);
   }
 
+  prepareEmployeeBarChart() {
+    let statusCreated: any = [];
+    let statusApproved: any = [];
+    let statusFinished: any = [];
+    let statusRefused: any = [];
+
+    let lastSixMonthData = [];
+    var currentDate = new Date();
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let lastSixMonthLabel = []
+
+    for (let i = 0; i < 6; i++) {
+      lastSixMonthLabel.push(months[(currentDate.getMonth() - i)]);
+    }
+
+    for (var i = 0; i < 6; i++) {
+      let statusCreatedSum: number = 0;
+      let statusApprovedSum: number = 0;
+      let statusRefusedSum: number = 0;
+      let statusFinishedSum: number = 0;
+
+      for (var j = 0; j < this.employeeTravelStatuses.length; j++) {
+        if (new Date(this.employeeTravelStatuses[j].createdAt).getMonth() == (new Date().getMonth() - i)) {
+          if (this.employeeTravelStatuses[j].travelStatus.name === 'created') {
+            statusCreatedSum++;
+          }
+          else if (this.employeeTravelStatuses[j].travelStatus.name === 'approved') {
+            statusApprovedSum++;
+          }
+          else if (this.employeeTravelStatuses[j].travelStatus.name === 'refused') {
+            statusRefusedSum++;
+          }
+          else statusFinishedSum++;
+
+        }
+      }
+      statusCreated.push(statusCreatedSum);
+      statusApproved.push(statusApprovedSum);
+      statusFinished.push(statusFinishedSum);
+      statusRefused.push(statusRefusedSum);
+    }
+    lastSixMonthData[0] = lastSixMonthLabel.reverse();
+    lastSixMonthData[1] = statusCreated.reverse();
+    lastSixMonthData[2] = statusApproved.reverse();
+    lastSixMonthData[3] = statusRefused.reverse();
+    lastSixMonthData[4] = statusFinished.reverse();
+
+    this.employeeTravelStatusBarChart(lastSixMonthData);
+  }
+
   travelStatusBarChart(data) {
     var barChartData = {
       labels: data[0],
@@ -202,6 +278,7 @@ export class DashboardComponent implements OnInit {
       ]
     };
     var chartOptions = {
+
       responsive: true,
       legend: {
         position: "top"
@@ -219,6 +296,62 @@ export class DashboardComponent implements OnInit {
       }
     }
     var myBarChart = new Chart('travelStatusBarChart', {
+      type: 'bar',
+      data: barChartData,
+      options: chartOptions
+    });
+  }
+
+  employeeTravelStatusBarChart(data) {
+    console.log(data);
+    var barChartData = {
+      labels: data[0],
+      datasets: [
+        {
+          label: "Created",
+          backgroundColor: "#36b9cc",
+          borderColor: "#36b9cc",
+          borderWidth: 1,
+          data: data[1]
+        },
+        {
+          label: "Approved",
+          backgroundColor: "#1cc88a",
+          borderColor: "#1cc88a",
+          borderWidth: 1,
+          data: data[2]
+        },
+        {
+          label: "Refused",
+          backgroundColor: "#ffff99",
+          borderColor: "#ffff99",
+          borderWidth: 1,
+          data: data[3]
+        },
+        {
+          label: "Finished",
+          backgroundColor: "#4e73df",
+          borderColor: "#4e73df",
+          borderWidth: 1,
+          data: data[4]
+        }
+      ]
+    };
+    var chartOptions = {
+
+      responsive: true,
+      legend: {
+        position: "top"
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+    var myBarChart = new Chart('employeeTravelStatusBarChart', {
       type: 'bar',
       data: barChartData,
       options: chartOptions

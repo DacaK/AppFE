@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { UiSwitchModule } from 'ngx-toggle-switch';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { SidebarComponent } from '../layout/sidebar/sidebar.component';
@@ -58,7 +59,8 @@ import { AuthService } from '../auth/auth.service';
         PagesRoutingModule,
         UtilModule,
         Ng2SmartTableModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        UiSwitchModule
     ],
     exports: [
         SidebarComponent,

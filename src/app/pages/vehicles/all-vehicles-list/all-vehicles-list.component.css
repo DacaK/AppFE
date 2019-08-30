@@ -10,6 +10,10 @@
     background: rgba(245, 144, 105, 0.5);
 }
 
+:host /deep/ tr {
+    cursor: pointer;
+}
+
 .icon-color {
     width: 12px;
     height: 12px;

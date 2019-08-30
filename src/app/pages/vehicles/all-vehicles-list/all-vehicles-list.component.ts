@@ -140,7 +140,13 @@ export class AllVehiclesListComponent implements OnInit {
           title: 'Consumption'
         },
         isAvailable: {
-          title: 'Available'
+          title: 'Available',
+          valuePrepareFunction: (data) => {
+            if (data) {
+              return 'Yes'
+            }
+            return 'No';
+          }
         }
       },
       actions: {
